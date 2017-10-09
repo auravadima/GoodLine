@@ -8,7 +8,9 @@ public class user {
     user(String ...  str){
         this.login = str[0];
         this.pass = str[1];
-        this.res = str[2];
-        this.role = str[3];
+        if(str.length == 4) {
+            this.res = str[2];
+            this.role = str[3];
+        }
     }
 }
