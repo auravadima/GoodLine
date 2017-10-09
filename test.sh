@@ -71,4 +71,16 @@ then
 else 
 echo FAILURE
 fi
+fi
+echo error 3 was expected
+y+=1
+java -jar 123.jar -l vasya -p qwerty -res ABG.TGB -role UNKNOWN
+if (($? == 3)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+
 echo $x of $y
