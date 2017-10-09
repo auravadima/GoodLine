@@ -4,11 +4,23 @@ public class cmd {
         System.out.println("Это справка, которая вызывается, если число аргументов не равно двум или 4 или равно нулю");
     }
 
+
+    public static boolean minCheck(String[] args){
+        if(args.length == 2 || args.length == 4){
+            return true;
+        }
+        else {
+            help();
+            return false;
+        }
+    }
+
     public static void checkArgs(String[] args){
         String[] checkedArgs = new String[4];
         if (args.length == 2){
             checkedArgs[0] = args[0];
             checkedArgs[1] = args[1];
+            return;
         }
         else if (args.length == 4){
             checkedArgs[2] = args[2];
@@ -17,11 +29,14 @@ public class cmd {
                     case "WRITE": break;
                     case "READ": break;
                     case "EXECUTE": break;
-                    default: System.exit(3);
+                    default: main.status = 3;
                 }
                 checkedArgs[3] = args[3];
             }
-            else System.exit(3);
+            else{
+                main.status = 3;
+                return;
+            }
         }
         else{
             help();

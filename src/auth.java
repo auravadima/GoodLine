@@ -1,5 +1,7 @@
 public class auth {
 
+
+
     public static user isUser(user us){
 
         for(int i = 0; i < main.users.size(); i++){
@@ -10,7 +12,7 @@ public class auth {
 
         }
 
-        System.exit(1);
+        main.status = 1;
         return us;
 
     }
@@ -20,7 +22,7 @@ public class auth {
     public static void rightPass(user us, user RegUs){
 
         if (!RegUs.pass.equals(us.pass)){
-            System.exit(2);
+            main.status = 2;
         }
 
     }
@@ -29,8 +31,9 @@ public class auth {
 
     public static void access(user us, user RegUs) {
 
-        if (!us.role.equals(RegUs)){
-            System.exit(4);
+        if (!us.role.equals(RegUs.role)){
+            main.status = 4;
+            return;
         }
 
         if (us.res == null) {
@@ -40,7 +43,7 @@ public class auth {
         String[] userRes = us.res.split("\\.");
         String[] accessRes = RegUs.res.split("\\.");
         if(userRes.length < accessRes.length) {
-            System.exit(4);
+            main.status = 4;
         }
 
         if(us.res != null) {
@@ -50,7 +53,7 @@ public class auth {
                     continue;
                 }
                 else {
-                    System.exit(4);
+                    main.status = 4;
                 }
             }
 
