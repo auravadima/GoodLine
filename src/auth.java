@@ -6,17 +6,15 @@ public class auth {
             if(us.login.equals(main.users.get(i).login)) {
                 return main.users.get(i);
             }
-
         }
         System.exit(1);
         return us;
     }
 
     public static void rightPass(user us, user RegUs){
-        if (RegUs.pass.equals(us.pass)){
-
+        if (!RegUs.pass.equals(us.pass)){
+            System.exit(2);
         }
-        System.exit(2);
     }
 
 }
