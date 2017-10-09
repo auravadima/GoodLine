@@ -41,4 +41,34 @@ then
 else 
 echo FAILURE
 fi
+echo error 0 was expected
+y+=1
+java -jar 123.jar -l vasya -p qwerty -res ABG.THG.TYU -role WRITE
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 3 was expected
+y+=1
+java -jar 123.jar -l vasya -p qwerty -res ABG.THG.TYU -role UNKNOWN
+if (($? == 3)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 3 was expected
+y+=1
+java -jar 123.jar -l vasya -p qwerty -res ABG.TGB -role UNKNOWN
+if (($? == 3)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
 echo $x of $y
