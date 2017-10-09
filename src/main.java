@@ -6,8 +6,8 @@ public class main {
 
     public static void main(String[] args) {
 
-        users.add(new user("auravadima","rAAzhyGF"));
-        users.add(new user("vasya","qwerty"));
+        users.add(new user("auravadima","rAAzhyGF","A.B.C","WRITE"));
+        users.add(new user("vasya","qwerty","A.G.Y","READ"));
         user Me = new user(args);
         auth.isUser(Me);
 
