@@ -10,9 +10,7 @@ public class user {
             this.login = str[0];
             this.pass = str[1];
         }
-        else {
-            this.login = str[0];
-            this.pass = str[1];
+        if(str.length == 4){
             this.res = str[2];
             this.role = str[3];
         }

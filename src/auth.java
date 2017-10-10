@@ -12,7 +12,7 @@ public class auth {
 
         }
 
-        main.status = 1;
+        System.exit(1);
         return us;
 
     }
@@ -22,7 +22,7 @@ public class auth {
     public static void rightPass(user us, user RegUs){
 
         if (!RegUs.pass.equals(us.pass)){
-            main.status = 2;
+            System.exit(2);
         }
 
     }
@@ -32,7 +32,7 @@ public class auth {
     public static void access(user us, user RegUs) {
 
         if (!us.role.equals(RegUs.role)){
-            main.status = 4;
+            System.exit(4);
             return;
         }
 
@@ -43,7 +43,7 @@ public class auth {
         String[] userRes = us.res.split("\\.");
         String[] accessRes = RegUs.res.split("\\.");
         if(userRes.length < accessRes.length) {
-            main.status = 4;
+            System.exit(4);
         }
 
         if(us.res != null) {
@@ -53,7 +53,7 @@ public class auth {
                     continue;
                 }
                 else {
-                    main.status = 4;
+                    System.exit(4);
                 }
             }
 
