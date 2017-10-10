@@ -162,7 +162,7 @@ Pass: qwerty
       14. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role OPEN → 3
       15. -l auravadima -p rAAzhyGF -ds not\_Date -de not\_Date -vol 12345 -res A.B -role EXECUTE → 5
       16. -l auravadima -p rAAzhyGF -ds 2015-12-12 -de not\_Date -vol 12345 -res A.B.C.D.E -role EXECUTE → 5
-      17. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG -role WRITE → 3
+      17. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG -role WRITE → 4
       18. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role bjkl →  3
       19. -l auravadima -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE → 2
       20. -l vadim -p rAAzhyGF -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE → 1

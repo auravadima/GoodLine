@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class auth {
@@ -57,13 +58,12 @@ public class auth {
         if(args.length == 7){
             SimpleDateFormat format = new SimpleDateFormat();
             format.applyPattern("yyyy-MM-dd");
-
             try {
 
                 format.parse(args[4]);
                 format.parse(args[5]);
 
-            } catch (java.text.ParseException e) {
+            } catch (ParseException e) {
 
                 main.status = 5;
                 return;
@@ -94,7 +94,7 @@ public class auth {
             return;
         }
 
-        if(us.res != null) {
+        if(!us.res.equals("")) {
 
             for(int i = 0; i < accessRes.length; i++) {
                 if (accessRes[i].equals(userRes[i])) {

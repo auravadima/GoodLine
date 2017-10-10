@@ -8,8 +8,8 @@ public class main {
 
     public static void main(String[] args) throws ParseException, java.text.ParseException {
         cmd c = new cmd();
-        users.add(new user("auravadima","rAAzhyGF","A.B.C","WRITE","","",""));
-        users.add(new user("vasya","qwerty","A.G.Y","READ","","",""));
+        users.add(new user("auravadima","rAAzhyGF","A.B","WRITE","","",""));
+        users.add(new user("vasya","qwerty","A.K.Y","READ","","",""));
             String[] checkedArgs = c.Parse(args);
             user Me = new user(checkedArgs);
             user Reg = auth.isUser(Me);
@@ -17,7 +17,7 @@ public class main {
                     if(status == 0 && !checkedArgs[3].equals("")) auth.checkRole(checkedArgs);
                     if(status == 0 && !checkedArgs[3].equals("")) auth.access(Me, Reg);
                     if(status == 0 && !checkedArgs[6].equals("")) auth.checkDateVol(checkedArgs);
-            System.out.println(status);
+                    System.out.println(status);
             System.exit(status);
     }
 }
