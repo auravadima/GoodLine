@@ -150,19 +150,19 @@ Pass: qwerty
       2. -l auravadima -p qwertyui → 2
       3. -l user -p rAAzhyGF → 1
       4. -l user -p asdg → 1
-      5. -l vasya -p qwerty -role WRITE -res ABG.THG.TYU  → 0
-      6. -l vasya -p qwerty -role WRITE -res ABG.THG → 4
-      7. -l vasya -p qwerty -role OPEN -res ABG.THG.TYU → 3
+      5. -l vasya -p qwerty -role READ -res A.K.Y  → 0
+      6. -l auravadima -p rAAzhyGF -res A.B -role WRITE → 4
+      7. -l vasya -p qwerty -res A.K.Y.innerFolder  -role READ → 0
       8. -l auravadima -p rAAzhyGF -role OPEN -res ABG → 3
       9. -l vasya -p rAAzhyGF -role OPEN -res GHY.IOP → 2
       10. -l user -p qwerty -role OPEN -res ABG.THG.TYU.innerFolder.innerFolder → 1
       11. -l vasya -p rAAzhyGF -role GHJK -res ABG.THG.TYU.innerFolder → 2
       12. -l qwerty -p asdfg -role qwsd -res ABG.THG.TYU → 1
-      13. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE → 0
-      14. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role OPEN → 5
-      15. -l auravadima -p rAAzhyGF -ds not\_Date -de not\_Date -vol 12345 -res ABG.THG.TYU -role WRITE → 5
-      16. -l auravadima -p rAAzhyGF -ds 2015-12-12 -de not\_Date -vol 12345 -res ABG.THG.TYU -role WRITE → 5
-      17. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG -role WRITE → 4
+      13. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res A.K.Y -role WRITE → 4
+      14. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role OPEN → 3
+      15. -l auravadima -p rAAzhyGF -ds not\_Date -de not\_Date -vol 12345 -res A.B -role EXECUTE → 5
+      16. -l auravadima -p rAAzhyGF -ds 2015-12-12 -de not\_Date -vol 12345 -res A.B.C.D.E -role EXECUTE → 5
+      17. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG -role WRITE → 3
       18. -l vasya -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role bjkl →  3
       19. -l auravadima -p qwerty -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE → 2
       20. -l vadim -p rAAzhyGF -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE → 1
