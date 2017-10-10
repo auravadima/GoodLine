@@ -142,7 +142,8 @@ Login: vasya
 
 Pass: qwerty
 
-Стандартный уровень доступа: ABG.THG.TYU (Все вложенные доступны, а папки находящиеся в другой ветви -  нет)
+Уровень доступа auravadima A.B с ролью EXECUTE
+Уровень доступа vasya A.K.Y с ролью READ
 
 
       1. -l auravadima -p rAAzhyGF → 0
