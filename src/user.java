@@ -1,3 +1,4 @@
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +12,9 @@ public class user {
     String ds;
     String de;
     int vol;
+    String salt;
 
-    user(String ...  str) throws ParseException {
+    user(String ...  str) throws ParseException, NoSuchAlgorithmException {
         if(str[0] != null) {
             this.login = str[0];
             this.pass = str[1];
@@ -26,6 +28,10 @@ public class user {
             this.de = str[5];
             this.vol = Integer.valueOf(str[6]);
         }
+    }
+
+    public void setSalt(String salt){
+        this.salt = salt;
     }
 
 }

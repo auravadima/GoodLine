@@ -1,3 +1,4 @@
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -6,12 +7,10 @@ public class auth {
 
 
     public static user isUser(user us){
-
         for(int i = 0; i < main.users.size(); i++){
             if(us.login.equals(main.users.get(i).login)) {
                 return main.users.get(i);
             }
-
         }
         main.status = 1;
         return us;
@@ -20,8 +19,8 @@ public class auth {
 
 
 
-    public static boolean rightPass(user us, user RegUs){
-
+    public static boolean rightPass(user us, user RegUs) throws NoSuchAlgorithmException {
+        us.pass = passwords.Hash(passwords.Hash(us.pass) + us.salt);
         if (!RegUs.pass.equals(us.pass)){
             main.status = 2;
             return false;
