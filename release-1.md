@@ -142,10 +142,9 @@ Login: vasya
 
 Pass: qwerty
 
+Уровень доступа vasya A.K.Y с ролью READ
 Уровень доступа auravadima A.B с ролью EXECUTE
 Уровень доступа vasya A.K.Y с ролью READ
-
-
 
 
       1. -l auravadima -p rAAzhyGF → 0
