@@ -146,6 +146,8 @@ Pass: qwerty
 Уровень доступа vasya A.K.Y с ролью READ
 
 
+
+
       1. -l auravadima -p rAAzhyGF → 0
       2. -l auravadima -p qwertyui → 2
       3. -l user -p rAAzhyGF → 1
