@@ -1,48 +1,43 @@
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class user {
-    
+
     String login;
     String pass;
-    String ds;
-    String de;
-    int vol;
     String salt;
 
-    ArrayList<access> acc = new ArrayList<access>();
+    ArrayList<Accounting> inf = new ArrayList<>();
+    ArrayList<Authorization> acc = new ArrayList<>();
 
-    user(String ...  str) throws ParseException, NoSuchAlgorithmException {
-        if(str[0] != null) {
-            this.login = str[0];
-            this.pass = str[1];
+    public user(dataSet set) throws ParseException, NoSuchAlgorithmException {
+        if (set.isAuthentication()) {
+            this.login = set.login;
+            this.pass = set.pass;
         }
-        if(str[2] != ""){
-            acc.add(new access(str[2],str[3]));
-           }
-        if(str[4] != ""){
-            this.ds = str[4];
-            this.de = str[5];
-            try {
-                Integer.parseInt(str[6]);
-            } catch (NumberFormatException e) {
-
-                main.status = 5;
-                return;
-
-            }
-            this.vol = Integer.valueOf(str[6]);
+        if (set.isAuthorization()) {
+            addAccess(set.res, set.role);
+        }
+        if (set.isAccounting()) {
+            addAcc(set.ds, set.de, set.vol);
+        }
+        if (set.salt != null) {
+            setSalt(set.salt);
         }
     }
 
-    public void setSalt(String salt){
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    public void setAccess(String res, String role) {
-        this.acc.add(new access(res,role));
+    public void addAccess(String res, String role)
+
+    {
+        this.acc.add(new Authorization(res, role));
+    }
+
+    public void addAcc(String ds, String de, String vol) {
+        this.inf.add(new Accounting(ds, de, vol));
     }
 }
