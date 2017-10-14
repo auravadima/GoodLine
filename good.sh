@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/vadim/Desktop/git/GoodLine/out/production/GoodLine
+cd /home/auravadima/Desktop/git/GoodLine/out/production/GoodLine
 declare -i x=0
 declare -i y=0
 echo error 0 was expected
@@ -196,6 +196,77 @@ echo error 1 was expected
 y+=1
 java -jar GoodLine.jar -l vadim -p rAAzhyGF -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res ABG.THG.TYU -role WRITE
 if (($? == 1)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 5 was expected
+y+=1
+java -jar GoodLine.jar -l auravadima -p rAAzhyGF -ds 2015-12-12 -de 2015-12-12 -vol not_number -res A.B -role WRITE
+if (($? == 5)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jdoe -p sup3rpaZZ -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.b -role WRITE
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jdoe -p sup3rpaZZ -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a -role READ
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.b.c -role EXECUTE
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.bc -role EXECUTE
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo $?
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.bc.inner -role EXECUTE
+if (($? == 0)) 
+then
+    echo SUCCESS
+    x+=1
+else 
+echo FAILURE
+fi
+echo error 0 was expected
+y+=1
+java -jar GoodLine.jar -l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.b.c.inner -role EXECUTE
+if (($? == 0)) 
 then
     echo SUCCESS
     x+=1

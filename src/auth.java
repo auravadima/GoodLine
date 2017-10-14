@@ -30,21 +30,18 @@ public class auth {
     }
 
 
-    public static void checkRole(String[] args){
-        if (args.length > 3) {
-            args[2] = args[2];
-            if (args[3] != null) {
-                switch (args[3]) {
-                    case "WRITE":
-                        break;
-                    case "READ":
-                        break;
-                    case "EXECUTE":
-                        break;
-                    default:
-                        main.status = 3;
-                        return;
-                }
+    public static void checkRole(user us){
+        if (us.acc.get(0).role != null) {
+            switch (us.acc.get(0).role) {
+                case "WRITE":
+                    break;
+                case "READ":
+                    break;
+                case "EXECUTE":
+                    break;
+                default:
+                    main.status = 3;
+                    return;
             }
         }
         else{
@@ -53,59 +50,53 @@ public class auth {
     }
 
 
-    public static void checkDateVol(String[] args){
-        if(args.length == 7){
+    public static void checkDateVol(user us){
+        if(!us.ds.isEmpty()){
             SimpleDateFormat format = new SimpleDateFormat();
             format.applyPattern("yyyy-MM-dd");
             try {
 
-                format.parse(args[4]);
-                format.parse(args[5]);
+                format.parse(us.ds);
+                format.parse(us.de);
 
             } catch (ParseException e) {
 
                 main.status = 5;
                 return;
             }
-            try {
-                Integer.parseInt(args[6]);
-            } catch (NumberFormatException e) {
+        }
+    }
 
-                main.status = 5;
+
+//////////////////////////////
+    public static void access(user us, user RegUs) {
+        boolean access = false;
+        String[] userRes = us.acc.get(0).res.split("\\.");
+
+            for( int i = 0; i < RegUs.acc.size(); i++){
+                if(us.acc.get(0).role.equals(RegUs.acc.get(i).role) && !access){
+                      String[] accessRes = RegUs.acc.get(i).res.split("\\.");
+                    if(userRes.length < accessRes.length) {
+                        main.status = 4;
+                        return;
+                    }
+
+                    if(!us.acc.isEmpty()) {
+
+                        for(int k = 0; k < accessRes.length; k++) {
+                            if (!accessRes[k].equals(userRes[k])) {
+
+                            }
+                            access = true;
+                        }
+
+                    }
+                }
+            }
+            if(!access){
+                main.status = 4;
                 return;
             }
-        }
-    }
-
-
-
-    public static void access(user us, user RegUs) {
-
-        if (!us.role.equals(RegUs.role)){
-            main.status = 4;
-            return;
-        }
-
-        String[] userRes = us.res.split("\\.");
-        String[] accessRes = RegUs.res.split("\\.");
-        if(userRes.length < accessRes.length) {
-            main.status = 4;
-            return;
-        }
-
-        if(!us.res.equals("")) {
-
-            for(int i = 0; i < accessRes.length; i++) {
-                if (accessRes[i].equals(userRes[i])) {
-                    continue;
-                }
-                else {
-                    main.status = 4; return;
-                }
-            }
-
-        }
-
-    }
+   }
 
 }
