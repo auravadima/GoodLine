@@ -3,6 +3,9 @@ import java.security.NoSuchAlgorithmException;
 
 public class passwords {
 
+    public static final int COUNT_OF_SYMBOLS = 25;
+
+
     public static String Hash(String text) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(text.getBytes());
@@ -17,11 +20,10 @@ public class passwords {
     }
 
     public static String randSalt() {
-        String symbols = "acehew#^&*%&(#";
+        String symbols = "abcdefghijklmopqwertuvwxyz1234567890";
         StringBuilder randString = new StringBuilder();
-        int count = (int)(Math.random()*30);
-        for(int i=0;i<count;i++)
-            randString.append(symbols.charAt((int)(Math.random()*symbols.length())));
+        for (int i = 0; i < COUNT_OF_SYMBOLS; i++)
+            randString.append(symbols.charAt((int) (Math.random() * symbols.length())));
         return randString.toString();
     }
 
