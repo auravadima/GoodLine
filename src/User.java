@@ -2,16 +2,16 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class user {
+public class User {
 
-    String login;
-    String pass;
-    String salt;
+    String  login;
+    String  pass;
+    String  salt;
 
     ArrayList<Accounting> inf = new ArrayList<>();
     ArrayList<Authorization> acc = new ArrayList<>();
 
-    public user(dataSet set) throws ParseException, NoSuchAlgorithmException {
+    public User(DataSet set) throws ParseException, NoSuchAlgorithmException {
         if (set.isAuthentication()) {
             this.login = set.login;
             this.pass = set.pass;

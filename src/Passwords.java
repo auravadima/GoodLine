@@ -1,12 +1,12 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class passwords {
+public class Passwords {
 
     public static final int COUNT_OF_SYMBOLS = 25;
 
 
-    public static String Hash(String text) throws NoSuchAlgorithmException {
+    public static String hash(String text) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(text.getBytes());
 

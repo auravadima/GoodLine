@@ -2,14 +2,14 @@ import org.apache.commons.cli.*;
 
 import java.security.NoSuchAlgorithmException;
 
-public class cmd {
+public class Cmd {
 
     private String[] args = null;
     public static Options option = new Options();
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = null;
 
-    public cmd() {
+    public Cmd() {
         option.addOption("l", "login", true, "Enter login (required)");
         option.addOption("p", "pass", true, "Enter password (required)");
         option.addOption("res", true, "Enter res");
@@ -53,10 +53,10 @@ public class cmd {
     }
 
 
-    public dataSet Parse(String[] args) throws ParseException, NoSuchAlgorithmException {
+    public DataSet Parse(String[] args) throws ParseException, NoSuchAlgorithmException {
         this.args = args;
 
-        dataSet set = new dataSet();
+        DataSet set = new DataSet();
         cmd = parser.parse(option, args);
 
         if (isHelp()) {

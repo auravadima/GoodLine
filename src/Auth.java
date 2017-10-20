@@ -3,11 +3,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class auth {
+public class Auth {
 
     public static int status = 0;
 
-    public static user isUser(user us, ArrayList<user> users) {
+    public static User isUser(User us, ArrayList<User> users) {
         for (int i = 0; i < users.size(); i++) {
             if (us.login.equals(users.get(i).login)) {
                 return users.get(i);
@@ -18,8 +18,8 @@ public class auth {
     }
 
 
-    public static boolean rightPass(user us, user RegUs) throws NoSuchAlgorithmException {
-        if (!RegUs.pass.equals(passwords.Hash(passwords.Hash(us.pass) + RegUs.salt))) {
+    public static boolean rightPass(User us, User RegUs) throws NoSuchAlgorithmException {
+        if (!RegUs.pass.equals(Passwords.hash(Passwords.hash(us.pass) + RegUs.salt))) {
             status = 2;
             return false;
         }
@@ -28,18 +28,15 @@ public class auth {
     }
 
 
-    public static void checkDateVol(user us) {
+    public static void checkDateVol(User us) {
         if (us.inf != null) {
             SimpleDateFormat format = new SimpleDateFormat();
             format.setLenient(false);
             format.applyPattern("yyyy-MM-dd");
             try {
-
                 format.parse(us.inf.get(us.inf.size() - 1).ds);
                 format.parse(us.inf.get(us.inf.size() - 1).de);
-
             } catch (ParseException e) {
-
                 status = 5;
                 return;
             }
@@ -53,7 +50,7 @@ public class auth {
     }
 
 
-    public static void access(user us, user RegUs) {
+    public static void access(User us, User RegUs) {
         if (us.acc.get(0).role != null) {
             switch (us.acc.get(0).role) {
                 case "WRITE":
@@ -67,7 +64,7 @@ public class auth {
                     return;
             }
         } else {
-            cmd.help();
+            Cmd.help();
         }
         boolean access = false;
         String[] userRes = us.acc.get(0).res.split("\\.");

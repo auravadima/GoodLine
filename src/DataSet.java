@@ -1,6 +1,6 @@
 import java.security.NoSuchAlgorithmException;
 
-public class dataSet {
+public class DataSet {
     String login;
     String pass;
     String res;
@@ -10,11 +10,12 @@ public class dataSet {
     String de;
     String vol;
 
-    public dataSet(String ex) {
-        this.salt = passwords.randSalt();
-    }
+     public DataSet(String anyString) {
+         createExampleUser();
+     }
 
-    public dataSet() {}
+    public DataSet() {
+    }
 
     public boolean isAuthentication() {
         if (this.login != null && this.pass != null) {
@@ -48,7 +49,7 @@ public class dataSet {
         if (this.salt == null) {
             this.pass = pass;
         } else {
-            this.pass = passwords.Hash(passwords.Hash(pass) + this.salt);
+            this.pass = Passwords.hash(Passwords.hash(pass) + this.salt);
         }
     }
 
@@ -63,8 +64,12 @@ public class dataSet {
         this.role = role;
     }
 
+    public void createExampleUser() {
+        this.salt = Passwords.randSalt();
+    }
+
     public void setSalt() {
-        this.salt = passwords.randSalt();
+        this.salt = Passwords.randSalt();
     }
 
 
