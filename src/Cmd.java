@@ -4,10 +4,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Cmd {
 
-    private String[] args = null;
     public static Options option = new Options();
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = null;
+    private String[] args = null;
 
     public Cmd() {
         option.addOption("l", "login", true, "Enter login (required)");
@@ -18,6 +18,11 @@ public class Cmd {
         option.addOption("de", true, "Enter end date (required if ds argument exists");
         option.addOption("vol", true, "Enter vol (required if ds/de argument exists");
         option.addOption("h", "help", true, "Show help");
+    }
+
+    public static void help() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("Main", option, true);
     }
 
     public boolean isAuthentication() {
@@ -52,7 +57,6 @@ public class Cmd {
         }
     }
 
-
     public DataSet Parse(String[] args) throws ParseException, NoSuchAlgorithmException {
         this.args = args;
 
@@ -77,11 +81,6 @@ public class Cmd {
             set.setInfo(cmd.getOptionValue("ds"), cmd.getOptionValue("de"), cmd.getOptionValue("vol"));
         }
         return set;
-    }
-
-    public static void help() {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Main", option, true);
     }
 
 }

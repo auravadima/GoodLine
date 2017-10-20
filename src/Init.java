@@ -25,7 +25,7 @@ public class Init {
         set.setPass("sup3rpaZZ");
         set.setRes("a", "READ");
         sets.add(set);
-        
+
         set = new DataSet("exampleUser");
         set.setLogin("jrow");
         set.setPass("Qweqrty12");

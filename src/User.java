@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class User {
 
-    String  login;
-    String  pass;
-    String  salt;
+    String login;
+    String pass;
+    String salt;
 
     ArrayList<Accounting> inf = new ArrayList<>();
     ArrayList<Authorization> acc = new ArrayList<>();
