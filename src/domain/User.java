@@ -1,17 +1,19 @@
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
+package domain;
+
+import main.DataSet;
+
 import java.util.ArrayList;
 
 public class User {
 
-    String login;
-    String pass;
-    String salt;
+    public String login;
+    public String pass;
+    public String salt;
 
-    ArrayList<Accounting> inf = new ArrayList<>();
-    ArrayList<Authorization> acc = new ArrayList<>();
+    public ArrayList<Accounting> inf = new ArrayList<>();
+    public ArrayList<Authorization> acc = new ArrayList<>();
 
-    public User(DataSet set) throws ParseException, NoSuchAlgorithmException {
+    public User(DataSet set) throws Exception {
         if (set.isAuthentication()) {
             this.login = set.login;
             this.pass = set.pass;
@@ -27,7 +29,7 @@ public class User {
         }
     }
 
-    public void setSalt(String salt) {
+    private void setSalt(String salt) {
         this.salt = salt;
     }
 
@@ -37,7 +39,7 @@ public class User {
         this.acc.add(new Authorization(res, role));
     }
 
-    public void addAcc(String ds, String de, String vol) {
+    private void addAcc(String ds, String de, String vol) {
         this.inf.add(new Accounting(ds, de, vol));
     }
 }

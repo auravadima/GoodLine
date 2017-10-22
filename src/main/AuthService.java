@@ -1,16 +1,21 @@
+package main;
+
+import domain.User;
+
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Auth {
 
-    public static int status = 0;
+public class AuthService {
 
-    public static User isUser(User us, ArrayList<User> users) {
-        for (int i = 0; i < users.size(); i++) {
-            if (us.login.equals(users.get(i).login)) {
-                return users.get(i);
+    static int status = 0;
+
+    static User isUser(User us, ArrayList<User> users) {
+        for (User user : users) {
+            if (us.login.equals(user.login)) {
+                return user;
             }
         }
         status = 1;
@@ -18,17 +23,15 @@ public class Auth {
     }
 
 
-    public static boolean rightPass(User us, User RegUs) throws NoSuchAlgorithmException {
-        if (!RegUs.pass.equals(Passwords.hash(Passwords.hash(us.pass) + RegUs.salt))) {
+    static void rightPass(User us, User regUs) throws NoSuchAlgorithmException {
+        if (!regUs.pass.equals(Passwords.getHash(us.pass, regUs.salt))) {
             status = 2;
-            return false;
         }
-        return true;
 
     }
 
 
-    public static void checkDateVol(User us) {
+    static void checkDateVol(User us) {
         if (us.inf != null) {
             SimpleDateFormat format = new SimpleDateFormat();
             format.setLenient(false);
@@ -44,13 +47,12 @@ public class Auth {
                 Integer.parseInt(us.inf.get(us.inf.size() - 1).vol);
             } catch (NumberFormatException e) {
                 status = 5;
-                return;
             }
         }
     }
 
 
-    public static void access(User us, User RegUs) {
+    static void access(User us, User RegUs) {
         if (us.acc.get(0).role != null) {
             switch (us.acc.get(0).role) {
                 case "WRITE":
@@ -64,7 +66,7 @@ public class Auth {
                     return;
             }
         } else {
-            Cmd.help();
+            CmdArgsParser.help();
         }
         boolean access = false;
         String[] userRes = us.acc.get(0).res.split("\\.");
@@ -76,18 +78,12 @@ public class Auth {
                     continue;
                 }
                 for (int k = 0; k < accessRes.length; k++) {
-                    if (accessRes[k].equals(userRes[k])) {
-                        access = true;
-                        continue;
-                    } else {
-                        access = false;
-                    }
+                    access = accessRes[k].equals(userRes[k]);
                 }
             }
         }
         if (!access) {
             status = 4;
-            return;
         }
     }
 }
