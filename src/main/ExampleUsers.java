@@ -10,7 +10,6 @@ class ExampleUsers {
     ArrayList<User> users = new ArrayList<>();
     private ArrayList<DataSet> sets = new ArrayList<>();
 
-
     private void createExampleUsersSets() throws NoSuchAlgorithmException {
         sets.add(new DataSet("auravadima", "rAAzhyGF", "A.B", "WRITE"));
         sets.add(new DataSet("vasya", "qwerty", "A.K.Y", "READ"));
@@ -22,6 +21,9 @@ class ExampleUsers {
         this.createExampleUsersSets();
         for (DataSet set : this.sets) {
             users.add(new User(set));
+        }
+        for (User user : users) {
+            user.setSalt();
         }
         users.get(2).addAccess("a.b", "WRITE");
         users.get(3).addAccess("a.bc", "EXECUTE");

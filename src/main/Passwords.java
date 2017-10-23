@@ -21,7 +21,7 @@ public class Passwords {
         return sb.toString();
     }
 
-    static String randSalt() {
+    public static String randSalt() {
         String symbols = "abcdefghijklmopqwertuvwxyz1234567890";
         StringBuilder randString = new StringBuilder();
         for (int i = 0; i < COUNT_OF_SYMBOLS; i++)
@@ -29,7 +29,7 @@ public class Passwords {
         return randString.toString();
     }
 
-    static String getHash(String pass, String salt) throws NoSuchAlgorithmException {
+    public static String getHash(String pass, String salt) throws NoSuchAlgorithmException {
         return hash(hash(pass) + salt);
     }
 

@@ -2,8 +2,6 @@ package main;
 
 import org.apache.commons.cli.*;
 
-import java.security.NoSuchAlgorithmException;
-
 class CmdArgsParser {
 
     private static Options option = new Options();

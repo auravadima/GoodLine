@@ -9,7 +9,7 @@ public class Main {
 
         CmdArgsParser c = new CmdArgsParser();
 
-        DataSet userSet = c.Parse(args);
+        DataSet userData = c.Parse(args);
         if (c.isHelp()) {
             CmdArgsParser.help();
             System.exit(0);
@@ -18,16 +18,16 @@ public class Main {
         ExampleUsers exampleUsers = new ExampleUsers();
         exampleUsers.createExampleUsers();
 
-        User Me = new User(userSet);
+        User Me = new User(userData);
         User Reg = AuthService.isUser(Me, exampleUsers.users);
 
-        if (userSet.isAuthentication() && (AuthService.status == 0)) {
+        if (userData.isAuthentication() && (AuthService.status == 0)) {
             AuthService.rightPass(Me, Reg);
         }
-        if (userSet.isAuthorization() && (AuthService.status == 0)) {
+        if (userData.isAuthorization() && (AuthService.status == 0)) {
             AuthService.access(Me, Reg);
         }
-        if (userSet.isAccounting() && (AuthService.status == 0)) {
+        if (userData.isAccounting() && (AuthService.status == 0)) {
             AuthService.checkDateVol(Me);
         }
         System.exit(AuthService.status);

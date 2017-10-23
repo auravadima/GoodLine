@@ -1,7 +1,9 @@
 package domain;
 
 import main.DataSet;
+import main.Passwords;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class User {
@@ -24,13 +26,11 @@ public class User {
         if (set.isAccounting()) {
             addAcc(set.ds, set.de, set.vol);
         }
-        if (set.salt != null) {
-            setSalt(set.salt);
-        }
     }
 
-    private void setSalt(String salt) {
-        this.salt = salt;
+    public void setSalt() throws NoSuchAlgorithmException {
+        this.salt = Passwords.randSalt();
+        this.pass = Passwords.getHash(this.pass, this.salt);
     }
 
     public void addAccess(String res, String role)

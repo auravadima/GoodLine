@@ -7,17 +7,17 @@ public class DataSet {
     public String pass;
     public String res;
     public String role;
-    public String salt;
     public String ds;
     public String de;
     public String vol;
 
-    DataSet(){}
+    DataSet() {
+    }
+
     DataSet(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
-        setSalt();
         setLogin(login);
         setPass(pass);
-        setRes(res,role);
+        setRes(res, role);
     }
 
     public boolean isAuthentication() {
@@ -37,11 +37,7 @@ public class DataSet {
     }
 
     void setPass(String pass) throws NoSuchAlgorithmException {
-        if (this.salt == null) {
-            this.pass = pass;
-        } else {
-            this.pass = Passwords.getHash(pass, salt);
-        }
+        this.pass = pass;
     }
 
     void setInfo(String ds, String de, String vol) {
@@ -54,10 +50,4 @@ public class DataSet {
         this.res = res;
         this.role = role;
     }
-
-    private void setSalt() {
-        this.salt = Passwords.randSalt();
-    }
-
-
 }
