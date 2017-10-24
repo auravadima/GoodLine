@@ -4,13 +4,11 @@ import domain.User;
 
 public class Main {
 
-
     public static void main(String[] args) throws Exception {
 
-        CmdArgsParser c = new CmdArgsParser();
-
-        DataSet userData = c.Parse(args);
-        if (c.isHelp()) {
+        CmdArgsParser cmdParser = new CmdArgsParser();
+        DataSet userData = cmdParser.Parse(args);
+        if (cmdParser.isHelp()) {
             CmdArgsParser.help();
             System.exit(0);
         }
@@ -18,18 +16,28 @@ public class Main {
         ExampleUsers exampleUsers = new ExampleUsers();
         exampleUsers.createExampleUsers();
 
-        User Me = new User(userData);
-        User Reg = AuthService.isUser(Me, exampleUsers.users);
+        User me = new User(userData);
+        User regUs = AuthService.isUser(me, exampleUsers.users);
 
-        if (userData.isAuthentication() && (AuthService.status == 0)) {
-            AuthService.rightPass(Me, Reg);
+        if (userData.hasAuthenticationData()) {
+            if (regUs == null) {
+                System.exit(1);
+            }
+            if (!AuthService.isRightPass(me, regUs)) {
+                System.exit(2);
+            }
         }
-        if (userData.isAuthorization() && (AuthService.status == 0)) {
-            AuthService.access(Me, Reg);
+        if (userData.hasAuthorizationData()) {
+            if (!AuthService.isRoleValid(me)) {
+                System.exit(3);
+            }
+            if (!AuthService.hasAccess(me, regUs)) {
+                System.exit(4);
+            }
         }
-        if (userData.isAccounting() && (AuthService.status == 0)) {
-            AuthService.checkDateVol(Me);
+        if (userData.hasAccountingData() && !AuthService.isDateVolValid(me)) {
+            System.exit(5);
         }
-        System.exit(AuthService.status);
+        System.exit(0);
     }
 }

@@ -50,11 +50,9 @@ class CmdArgsParser {
                 set.setLogin(cmd.getOptionValue("login"));
                 set.setPass(cmd.getOptionValue("pass"));
             }
-
             if (hasAuthorizationArgs()) {
                 set.setRes(cmd.getOptionValue("res"), cmd.getOptionValue("role"));
             }
-
             if (hasAccountingArgs()) {
                 set.setInfo(cmd.getOptionValue("ds"), cmd.getOptionValue("de"), cmd.getOptionValue("vol"));
             }

@@ -18,6 +18,8 @@ class ExampleUsers {
     }
 
     void createExampleUsers() throws Exception {
+        users.clear();
+        sets.clear();
         this.createExampleUsersSets();
         for (DataSet set : this.sets) {
             users.add(new User(set));

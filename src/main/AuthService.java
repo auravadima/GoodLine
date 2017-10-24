@@ -7,10 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-
 public class AuthService {
-
-    static int status = 0;
 
     static User isUser(User us, ArrayList<User> users) {
         for (User user : users) {
@@ -18,20 +15,14 @@ public class AuthService {
                 return user;
             }
         }
-        status = 1;
-        return us;
+        return null;
     }
 
-
-    static void rightPass(User us, User regUs) throws NoSuchAlgorithmException {
-        if (!regUs.pass.equals(Passwords.getHash(us.pass, regUs.salt))) {
-            status = 2;
-        }
-
+    static boolean isRightPass(User us, User regUs) throws NoSuchAlgorithmException {
+        return regUs.pass.equals(Passwords.getHash(us.pass, regUs.salt)); //2
     }
 
-
-    static void checkDateVol(User us) {
+    static boolean isDateVolValid(User us) {
         if (us.inf != null) {
             SimpleDateFormat format = new SimpleDateFormat();
             format.setLenient(false);
@@ -40,19 +31,18 @@ public class AuthService {
                 format.parse(us.inf.get(us.inf.size() - 1).ds);
                 format.parse(us.inf.get(us.inf.size() - 1).de);
             } catch (ParseException e) {
-                status = 5;
-                return;
+                return false;
             }
             try {
                 Integer.parseInt(us.inf.get(us.inf.size() - 1).vol);
             } catch (NumberFormatException e) {
-                status = 5;
+                return false;
             }
         }
+        return true;
     }
 
-
-    static void access(User us, User RegUs) {
+    static boolean isRoleValid(User us) {
         if (us.acc.get(0).role != null) {
             switch (us.acc.get(0).role) {
                 case "WRITE":
@@ -62,28 +52,30 @@ public class AuthService {
                 case "EXECUTE":
                     break;
                 default:
-                    status = 3;
-                    return;
+                    return false;
             }
-        } else {
-            CmdArgsParser.help();
         }
-        boolean access = false;
+        return true;
+    }
+
+    static boolean hasAccess(User us, User regUs) {
+        boolean hasAccess = false;
         String[] userRes = us.acc.get(0).res.split("\\.");
 
-        for (int i = 0; i < RegUs.acc.size(); i++) {
-            if (us.acc.get(0).role.equals(RegUs.acc.get(i).role) && !access) {
-                String[] accessRes = RegUs.acc.get(i).res.split("\\.");
+        for (int i = 0; i < regUs.acc.size(); i++) {
+            if (us.acc.get(0).role.equals(regUs.acc.get(i).role)) {
+                String[] accessRes = regUs.acc.get(i).res.split("\\.");
                 if (userRes.length < accessRes.length) {
                     continue;
                 }
                 for (int k = 0; k < accessRes.length; k++) {
-                    access = accessRes[k].equals(userRes[k]);
+                    hasAccess = accessRes[k].equals(userRes[k]);
+                }
+                if (hasAccess){
+                    return true;
                 }
             }
         }
-        if (!access) {
-            status = 4;
-        }
+        return false;
     }
 }

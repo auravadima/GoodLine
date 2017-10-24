@@ -11,8 +11,7 @@ public class DataSet {
     public String de;
     public String vol;
 
-    DataSet() {
-    }
+    DataSet() {}
 
     DataSet(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
         setLogin(login);
@@ -20,16 +19,16 @@ public class DataSet {
         setRes(res, role);
     }
 
-    public boolean isAuthentication() {
+    public boolean hasAuthenticationData() {
         return (this.login != null && this.pass != null);
     }
 
-    public boolean isAuthorization() {
-        return (isAuthentication() && this.res != null && this.role != null);
+    public boolean hasAuthorizationData() {
+        return (hasAuthenticationData() && this.res != null && this.role != null);
     }
 
-    public boolean isAccounting() {
-        return (isAuthorization() && this.ds != null & this.de != null & this.vol != null);
+    public boolean hasAccountingData() {
+        return hasAuthorizationData() && this.ds != null && this.de != null && this.vol != null;
     }
 
     void setLogin(String login) {

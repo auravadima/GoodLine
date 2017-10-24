@@ -7,7 +7,6 @@ public class Passwords {
 
     private static final int COUNT_OF_SYMBOLS = 25;
 
-
     private static String hash(String pass) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(pass.getBytes());
@@ -32,5 +31,4 @@ public class Passwords {
     public static String getHash(String pass, String salt) throws NoSuchAlgorithmException {
         return hash(hash(pass) + salt);
     }
-
 }

@@ -16,14 +16,14 @@ public class User {
     public ArrayList<Authorization> acc = new ArrayList<>();
 
     public User(DataSet set) throws Exception {
-        if (set.isAuthentication()) {
+        if (set.hasAuthenticationData()) {
             this.login = set.login;
             this.pass = set.pass;
         }
-        if (set.isAuthorization()) {
+        if (set.hasAuthorizationData()) {
             addAccess(set.res, set.role);
         }
-        if (set.isAccounting()) {
+        if (set.hasAccountingData()) {
             addAcc(set.ds, set.de, set.vol);
         }
     }

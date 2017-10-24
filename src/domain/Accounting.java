@@ -11,5 +11,4 @@ public class Accounting {
         this.de = de;
         this.vol = vol;
     }
-
 }
