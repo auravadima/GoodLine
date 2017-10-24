@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class AuthService {
 
-    static User isUser(User us, ArrayList<User> users) {
+    static User isUser(DataSet us, ArrayList<User> users) {
         for (User user : users) {
             if (us.login.equals(user.login)) {
                 return user;
@@ -18,23 +18,23 @@ public class AuthService {
         return null;
     }
 
-    static boolean isRightPass(User us, User regUs) throws NoSuchAlgorithmException {
+    static boolean isRightPass(DataSet us, User regUs) throws NoSuchAlgorithmException {
         return regUs.pass.equals(Passwords.getHash(us.pass, regUs.salt)); //2
     }
 
-    static boolean isDateVolValid(User us) {
+    static boolean isDateVolValid(DataSet us) {
         if (us.inf != null) {
             SimpleDateFormat format = new SimpleDateFormat();
             format.setLenient(false);
             format.applyPattern("yyyy-MM-dd");
             try {
-                format.parse(us.inf.get(us.inf.size() - 1).ds);
-                format.parse(us.inf.get(us.inf.size() - 1).de);
+                format.parse(us.inf.ds);
+                format.parse(us.inf.de);
             } catch (ParseException e) {
                 return false;
             }
             try {
-                Integer.parseInt(us.inf.get(us.inf.size() - 1).vol);
+                Integer.parseInt(us.inf.vol);
             } catch (NumberFormatException e) {
                 return false;
             }
@@ -42,9 +42,9 @@ public class AuthService {
         return true;
     }
 
-    static boolean isRoleValid(User us) {
-        if (us.acc.get(0).role != null) {
-            switch (us.acc.get(0).role) {
+    static boolean isRoleValid(DataSet us) {
+        if (us.acc.role != null) {
+            switch (us.acc.role) {
                 case "WRITE":
                     break;
                 case "READ":
@@ -58,12 +58,12 @@ public class AuthService {
         return true;
     }
 
-    static boolean hasAccess(User us, User regUs) {
+    static boolean hasAccess(DataSet us, User regUs) {
         boolean hasAccess = false;
-        String[] userRes = us.acc.get(0).res.split("\\.");
+        String[] userRes = us.acc.res.split("\\.");
 
         for (int i = 0; i < regUs.acc.size(); i++) {
-            if (us.acc.get(0).role.equals(regUs.acc.get(i).role)) {
+            if (us.acc.role.equals(regUs.acc.get(i).role)) {
                 String[] accessRes = regUs.acc.get(i).res.split("\\.");
                 if (userRes.length < accessRes.length) {
                     continue;
@@ -71,7 +71,7 @@ public class AuthService {
                 for (int k = 0; k < accessRes.length; k++) {
                     hasAccess = accessRes[k].equals(userRes[k]);
                 }
-                if (hasAccess){
+                if (hasAccess) {
                     return true;
                 }
             }

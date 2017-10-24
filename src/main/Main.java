@@ -16,26 +16,25 @@ public class Main {
         ExampleUsers exampleUsers = new ExampleUsers();
         exampleUsers.createExampleUsers();
 
-        User me = new User(userData);
-        User regUs = AuthService.isUser(me, exampleUsers.users);
+        User regUs = AuthService.isUser(userData, exampleUsers.users);
 
         if (userData.hasAuthenticationData()) {
             if (regUs == null) {
                 System.exit(1);
             }
-            if (!AuthService.isRightPass(me, regUs)) {
+            if (!AuthService.isRightPass(userData, regUs)) {
                 System.exit(2);
             }
         }
         if (userData.hasAuthorizationData()) {
-            if (!AuthService.isRoleValid(me)) {
+            if (!AuthService.isRoleValid(userData)) {
                 System.exit(3);
             }
-            if (!AuthService.hasAccess(me, regUs)) {
+            if (!AuthService.hasAccess(userData, regUs)) {
                 System.exit(4);
             }
         }
-        if (userData.hasAccountingData() && !AuthService.isDateVolValid(me)) {
+        if (userData.hasAccountingData() && !AuthService.isDateVolValid(userData)) {
             System.exit(5);
         }
         System.exit(0);

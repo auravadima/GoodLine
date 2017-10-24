@@ -1,15 +1,15 @@
 package main;
 
+import domain.Accounting;
+import domain.Authorization;
+
 import java.security.NoSuchAlgorithmException;
 
 public class DataSet {
     public String login;
     public String pass;
-    public String res;
-    public String role;
-    public String ds;
-    public String de;
-    public String vol;
+    public Accounting inf;
+    public Authorization acc;
 
     DataSet() {}
 
@@ -24,11 +24,12 @@ public class DataSet {
     }
 
     public boolean hasAuthorizationData() {
-        return (hasAuthenticationData() && this.res != null && this.role != null);
+        return (hasAuthenticationData() && this.acc != null);
     }
 
     public boolean hasAccountingData() {
-        return hasAuthorizationData() && this.ds != null && this.de != null && this.vol != null;
+
+        return (hasAuthorizationData() && this.inf != null);
     }
 
     void setLogin(String login) {
@@ -40,13 +41,10 @@ public class DataSet {
     }
 
     void setInfo(String ds, String de, String vol) {
-        this.ds = ds;
-        this.de = de;
-        this.vol = vol;
+        this.inf = new Accounting(ds, de, vol);
     }
 
     void setRes(String res, String role) {
-        this.res = res;
-        this.role = role;
+        this.acc = new Authorization(res, role);
     }
 }

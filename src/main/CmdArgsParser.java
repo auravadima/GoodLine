@@ -45,7 +45,6 @@ class CmdArgsParser {
         cmd = parser.parse(option, args);
 
         if (!isHelp()) {
-
             if (hasAuthenticationArgs()) {
                 set.setLogin(cmd.getOptionValue("login"));
                 set.setPass(cmd.getOptionValue("pass"));
@@ -62,5 +61,4 @@ class CmdArgsParser {
             return null;
         }
     }
-
 }

@@ -11,9 +11,8 @@ public class User {
     public String login;
     public String pass;
     public String salt;
-
-    public ArrayList<Accounting> inf = new ArrayList<>();
     public ArrayList<Authorization> acc = new ArrayList<>();
+    private ArrayList<Accounting> inf = new ArrayList<>();
 
     public User(DataSet set) throws Exception {
         if (set.hasAuthenticationData()) {
@@ -21,10 +20,10 @@ public class User {
             this.pass = set.pass;
         }
         if (set.hasAuthorizationData()) {
-            addAccess(set.res, set.role);
+            addAccess(set.acc.res, set.acc.role);
         }
         if (set.hasAccountingData()) {
-            addAcc(set.ds, set.de, set.vol);
+            addAcc(set.inf.ds, set.inf.de, set.inf.vol);
         }
     }
 
