@@ -5,8 +5,6 @@ import org.apache.commons.cli.*;
 class CmdArgsParser {
 
     private static Options option = new Options();
-    private CommandLineParser parser = new DefaultParser();
-    private CommandLine cmd = null;
 
     CmdArgsParser() {
         option.addOption("l", "login", true, "Enter login (required)");
@@ -24,41 +22,20 @@ class CmdArgsParser {
         formatter.printHelp("Main", option, true);
     }
 
-    private boolean hasAuthenticationArgs() {
-        return (cmd.hasOption("l") && cmd.hasOption("p"));
-    }
+    DataSet parse(String[] args) throws Exception {
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd;
 
-    private boolean hasAuthorizationArgs() {
-        return (hasAuthenticationArgs() && cmd.hasOption("res") && cmd.hasOption("role"));
-    }
-
-    private boolean hasAccountingArgs() {
-        return (hasAuthorizationArgs() && cmd.hasOption("ds") & cmd.hasOption("de") & cmd.hasOption("vol"));
-    }
-
-    boolean isHelp() {
-        return (cmd.hasOption("h"));
-    }
-
-    DataSet Parse(String[] args) throws Exception {
         DataSet set = new DataSet();
         cmd = parser.parse(option, args);
-
-        if (!isHelp()) {
-            if (hasAuthenticationArgs()) {
-                set.setLogin(cmd.getOptionValue("login"));
-                set.setPass(cmd.getOptionValue("pass"));
-            }
-            if (hasAuthorizationArgs()) {
-                set.setRes(cmd.getOptionValue("res"), cmd.getOptionValue("role"));
-            }
-            if (hasAccountingArgs()) {
-                set.setInfo(cmd.getOptionValue("ds"), cmd.getOptionValue("de"), cmd.getOptionValue("vol"));
-            }
-            return set;
-        } else {
+        if (cmd.hasOption("h")) {
             help();
             return null;
         }
+        set.setLogin(cmd.getOptionValue("login"));
+        set.setPass(cmd.getOptionValue("pass"));
+        set.setRes(cmd.getOptionValue("res"), cmd.getOptionValue("role"));
+        set.setInfo(cmd.getOptionValue("ds"), cmd.getOptionValue("de"), cmd.getOptionValue("vol"));
+        return set;
     }
 }

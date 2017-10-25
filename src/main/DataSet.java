@@ -6,28 +6,29 @@ import domain.Authorization;
 import java.security.NoSuchAlgorithmException;
 
 public class DataSet {
-    public String login;
-    public String pass;
-    public Accounting inf;
-    public Authorization acc;
+    String login;
+    String pass;
+    Accounting inf;
+    Authorization acc;
 
-    DataSet() {}
-
-    DataSet(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
-        setLogin(login);
-        setPass(pass);
-        setRes(res, role);
+    DataSet() {
     }
 
-    public boolean hasAuthenticationData() {
+    DataSet(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
+        this.login = login;
+        this.pass = pass;
+        this.acc = new Authorization(res, role);
+    }
+
+    boolean hasAuthenticationData() {
         return (this.login != null && this.pass != null);
     }
 
-    public boolean hasAuthorizationData() {
+    boolean hasAuthorizationData() {
         return (hasAuthenticationData() && this.acc != null);
     }
 
-    public boolean hasAccountingData() {
+    boolean hasAccountingData() {
 
         return (hasAuthorizationData() && this.inf != null);
     }
@@ -36,15 +37,24 @@ public class DataSet {
         this.login = login;
     }
 
-    void setPass(String pass) throws NoSuchAlgorithmException {
+    void setPass(String pass) {
         this.pass = pass;
+    }
+
+    void setRes(String res, String role) {
+        this.acc = new Authorization(res, role);
     }
 
     void setInfo(String ds, String de, String vol) {
         this.inf = new Accounting(ds, de, vol);
     }
 
-    void setRes(String res, String role) {
-        this.acc = new Authorization(res, role);
+    public Accounting getInfo() {
+        return this.inf;
     }
+
+    public Authorization getAcc() {
+        return this.acc;
+    }
+
 }

@@ -1,5 +1,8 @@
 package main;
 
+import domain.Accounting;
+import domain.Authorization;
+import domain.Roles;
 import domain.User;
 
 import java.security.NoSuchAlgorithmException;
@@ -7,64 +10,68 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+
 public class AuthService {
 
-    static User isUser(DataSet us, ArrayList<User> users) {
+    static User findUser(String login, ArrayList<User> users) {
         for (User user : users) {
-            if (us.login.equals(user.login)) {
+            if (login.equals(user.getLogin())) {
                 return user;
             }
         }
         return null;
     }
 
-    static boolean isRightPass(DataSet us, User regUs) throws NoSuchAlgorithmException {
-        return regUs.pass.equals(Passwords.getHash(us.pass, regUs.salt)); //2
+    static boolean isRightPass(String usPass, User regUs) throws NoSuchAlgorithmException {
+        return regUs.getPass().equals(Passwords.getHash(usPass, regUs.getSalt()));
     }
 
-    static boolean isDateVolValid(DataSet us) {
-        if (us.inf != null) {
-            SimpleDateFormat format = new SimpleDateFormat();
-            format.setLenient(false);
-            format.applyPattern("yyyy-MM-dd");
+    private static boolean isVolValid(Accounting auth) {
+        try {
+            Integer.parseInt(auth.vol);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean isDateValid(Accounting auth) {
+        SimpleDateFormat format = new SimpleDateFormat();
+        format.setLenient(false);
+        format.applyPattern("yyyy-MM-dd");
+        try {
+            format.parse(auth.ds);
+            format.parse(auth.de);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
+
+    static boolean isDateVolValid(Accounting auth) {
+        return auth.ds == null || (isDateValid(auth) && isVolValid(auth));
+    }
+
+    static boolean isRoleValid(String role) {
+        if (role != null) {
             try {
-                format.parse(us.inf.ds);
-                format.parse(us.inf.de);
-            } catch (ParseException e) {
-                return false;
-            }
-            try {
-                Integer.parseInt(us.inf.vol);
-            } catch (NumberFormatException e) {
+                Roles.valueOf(role);
+            } catch (IllegalArgumentException e) {
                 return false;
             }
         }
         return true;
     }
 
-    static boolean isRoleValid(DataSet us) {
-        if (us.acc.role != null) {
-            switch (us.acc.role) {
-                case "WRITE":
-                    break;
-                case "READ":
-                    break;
-                case "EXECUTE":
-                    break;
-                default:
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    static boolean hasAccess(DataSet us, User regUs) {
+    static boolean hasAccess(Authorization userAuth, User regUs) {
         boolean hasAccess = false;
-        String[] userRes = us.acc.res.split("\\.");
-
-        for (int i = 0; i < regUs.acc.size(); i++) {
-            if (us.acc.role.equals(regUs.acc.get(i).role)) {
-                String[] accessRes = regUs.acc.get(i).res.split("\\.");
+        if (userAuth.role == null) {
+            return true;
+        }
+        String[] userRes = userAuth.res.split("\\.");
+        for (int i = 0; i < regUs.getAcc().size(); i++) {
+            if (userAuth.role.equals(regUs.getAcc().get(i).role)) {
+                String[] accessRes = regUs.getAcc().get(i).res.split("\\.");
                 if (userRes.length < accessRes.length) {
                     continue;
                 }
