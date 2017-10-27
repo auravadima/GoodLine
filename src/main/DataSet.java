@@ -6,18 +6,22 @@ import domain.Authorization;
 import java.security.NoSuchAlgorithmException;
 
 public class DataSet {
-    String login;
-    String pass;
-    Accounting inf;
-    Authorization acc;
+    private String login;
+    private String pass;
+    private String ds;
+    private String de;
+    private String vol;
+    private String res;
+    private String role;
 
     DataSet() {
     }
 
     DataSet(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
-        this.login = login;
-        this.pass = pass;
-        this.acc = new Authorization(res, role);
+        setLogin(login);
+        setPass(pass);
+        setRes(res);
+        setRole(role);
     }
 
     boolean hasAuthenticationData() {
@@ -25,36 +29,67 @@ public class DataSet {
     }
 
     boolean hasAuthorizationData() {
-        return (hasAuthenticationData() && this.acc != null);
+        return (hasAuthenticationData() && this.res != null && this.role != null);
     }
 
     boolean hasAccountingData() {
 
-        return (hasAuthorizationData() && this.inf != null);
+        return (hasAuthorizationData() && this.ds != null && this.de != null && this.vol != null);
+    }
+
+    String getLogin() {
+        return login;
     }
 
     void setLogin(String login) {
         this.login = login;
     }
 
+    String getPass() {
+        return pass;
+    }
+
     void setPass(String pass) {
         this.pass = pass;
     }
 
-    void setRes(String res, String role) {
-        this.acc = new Authorization(res, role);
+    String getDs() {
+        return ds;
     }
 
-    void setInfo(String ds, String de, String vol) {
-        this.inf = new Accounting(ds, de, vol);
+    public void setDs(String ds) {
+        this.ds = ds;
     }
 
-    public Accounting getInfo() {
-        return this.inf;
+    String getDe() {
+        return de;
     }
 
-    public Authorization getAcc() {
-        return this.acc;
+    public void setDe(String de) {
+        this.de = de;
     }
 
+    String getVol() {
+        return vol;
+    }
+
+    public void setVol(String vol) {
+        this.vol = vol;
+    }
+
+    String getRes() {
+        return res;
+    }
+
+    void setRes(String res) {
+        this.res = res;
+    }
+
+    String getRole() {
+        return role;
+    }
+
+    void setRole(String role) {
+        this.role = role;
+    }
 }

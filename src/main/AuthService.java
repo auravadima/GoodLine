@@ -1,7 +1,6 @@
 package main;
 
 import domain.Accounting;
-import domain.Authorization;
 import domain.Roles;
 import domain.User;
 
@@ -26,30 +25,25 @@ public class AuthService {
         return regUs.getPass().equals(Passwords.getHash(usPass, regUs.getSalt()));
     }
 
-    private static boolean isVolValid(Accounting auth) {
+    public static boolean isVolValid(String vol) {
         try {
-            Integer.parseInt(auth.vol);
+            Integer.parseInt(vol);
         } catch (NumberFormatException e) {
             return false;
         }
         return true;
     }
 
-    private static boolean isDateValid(Accounting auth) {
+    public static boolean isDateValid(String ds) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.setLenient(false);
         format.applyPattern("yyyy-MM-dd");
         try {
-            format.parse(auth.ds);
-            format.parse(auth.de);
+            format.parse(ds);
         } catch (ParseException e) {
             return false;
         }
         return true;
-    }
-
-    static boolean isDateVolValid(Accounting auth) {
-        return auth.ds == null || (isDateValid(auth) && isVolValid(auth));
     }
 
     static boolean isRoleValid(String role) {
@@ -63,14 +57,14 @@ public class AuthService {
         return true;
     }
 
-    static boolean hasAccess(Authorization userAuth, User regUs) {
+    static boolean hasAccess(String res, String role, User regUs) {
         boolean hasAccess = false;
-        if (userAuth.role == null) {
+        if (role == null) {
             return true;
         }
-        String[] userRes = userAuth.res.split("\\.");
+        String[] userRes = res.split("\\.");
         for (int i = 0; i < regUs.getAcc().size(); i++) {
-            if (userAuth.role.equals(regUs.getAcc().get(i).role)) {
+            if (role.equals(regUs.getAcc().get(i).role)) {
                 String[] accessRes = regUs.getAcc().get(i).res.split("\\.");
                 if (userRes.length < accessRes.length) {
                     continue;

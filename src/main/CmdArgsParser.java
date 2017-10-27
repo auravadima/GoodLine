@@ -34,8 +34,11 @@ class CmdArgsParser {
         }
         set.setLogin(cmd.getOptionValue("login"));
         set.setPass(cmd.getOptionValue("pass"));
-        set.setRes(cmd.getOptionValue("res"), cmd.getOptionValue("role"));
-        set.setInfo(cmd.getOptionValue("ds"), cmd.getOptionValue("de"), cmd.getOptionValue("vol"));
+        set.setRes(cmd.getOptionValue("res"));
+        set.setRole(cmd.getOptionValue("role"));
+        set.setDs(cmd.getOptionValue("ds"));
+        set.setDe(cmd.getOptionValue("de"));
+        set.setVol(cmd.getOptionValue("vol"));
         return set;
     }
 }
