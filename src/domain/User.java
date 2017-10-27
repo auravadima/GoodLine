@@ -13,10 +13,9 @@ public class User {
     private ArrayList<Authorization> acc = new ArrayList<>();
     private ArrayList<Accounting> inf = new ArrayList<>();
 
-    public User(String login, String pass, String res, String role) throws NoSuchAlgorithmException {
+    public User(String login, String pass) throws NoSuchAlgorithmException {
         this.login = login;
         this.pass = pass;
-        addAccess(res, role);
         setSalt();
     }
 

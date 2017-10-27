@@ -74,5 +74,9 @@ test 0 '-l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res a.b.c
 test 5 '-l jrow -p Qweqrty12 -ds 2015-12-12 -de 2017-30-30 -vol 12345 -res a.b.c.inner -role EXECUTE'
 #29
 test 4 '-l jrow -p Qweqrty12 -ds 2015-12-12 -de 2015-12-12 -vol 12345 -res A.K.Y -role READ'
+#30
+test 0 '-l UWA -p HDP'
+#31
+test 4 '-l UWA -p HDP -res A.B -role WRITE'
 
 echo $x of $y

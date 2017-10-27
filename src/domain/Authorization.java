@@ -3,10 +3,10 @@ package domain;
 public class Authorization {
 
     public String res;
-    public String role;
+    public Roles role;
 
-    public Authorization(String res, String role) {
+    Authorization(String res, String role) {
         this.res = res;
-        this.role = role;
+        this.role = Roles.valueOf(role);
     }
 }

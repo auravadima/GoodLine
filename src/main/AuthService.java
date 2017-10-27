@@ -25,7 +25,7 @@ public class AuthService {
         return regUs.getPass().equals(Passwords.getHash(usPass, regUs.getSalt()));
     }
 
-    public static boolean isVolValid(String vol) {
+    static boolean isVolValid(String vol) {
         try {
             Integer.parseInt(vol);
         } catch (NumberFormatException e) {
@@ -34,7 +34,7 @@ public class AuthService {
         return true;
     }
 
-    public static boolean isDateValid(String ds) {
+    static boolean isDateValid(String ds) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.setLenient(false);
         format.applyPattern("yyyy-MM-dd");
@@ -46,17 +46,6 @@ public class AuthService {
         return true;
     }
 
-    static boolean isRoleValid(String role) {
-        if (role != null) {
-            try {
-                Roles.valueOf(role);
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     static boolean hasAccess(String res, String role, User regUs) {
         boolean hasAccess = false;
         if (role == null) {
@@ -64,7 +53,7 @@ public class AuthService {
         }
         String[] userRes = res.split("\\.");
         for (int i = 0; i < regUs.getAcc().size(); i++) {
-            if (role.equals(regUs.getAcc().get(i).role)) {
+            if (role.equals(regUs.getAcc().get(i).role.toString())) {
                 String[] accessRes = regUs.getAcc().get(i).res.split("\\.");
                 if (userRes.length < accessRes.length) {
                     continue;

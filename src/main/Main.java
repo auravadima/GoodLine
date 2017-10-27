@@ -1,5 +1,6 @@
 package main;
 
+import domain.Roles;
 import domain.User;
 
 import java.util.ArrayList;
@@ -9,12 +10,17 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ArrayList<User> users = new ArrayList<>();
 
-        users.add(new User("auravadima", "rAAzhyGF", "A.B", "WRITE"));
-        users.add(new User("vasya", "qwerty", "A.K.Y", "READ"));
-        users.add(new User("jdoe", "sup3rpaZZ", "a", "READ"));
-        users.add(new User("jrow", "Qweqrty12", "a.b.c", "EXECUTE"));
+        users.add(new User("auravadima", "rAAzhyGF"));
+        users.add(new User("vasya", "qwerty"));
+        users.add(new User("jdoe", "sup3rpaZZ"));
+        users.add(new User("jrow", "Qweqrty12"));
+        users.add(new User("UWA","HDP"));
 
+        users.get(0).addAccess("A.B","WRITE");
+        users.get(1).addAccess("A.K.Y","READ");
+        users.get(2).addAccess("a","READ");
         users.get(2).addAccess("a.b", "WRITE");
+        users.get(3).addAccess("a.b.c","EXECUTE");
         users.get(3).addAccess("a.bc", "EXECUTE");
 
         CmdArgsParser cmdParser = new CmdArgsParser();
@@ -35,7 +41,7 @@ public class Main {
             }
         }
         if (userData.hasAuthorizationData()) {
-            if (!AuthService.isRoleValid(userData.getRole())) {
+            if (!Roles.isDefined(userData.getRole())) {
                 System.exit(3);
             }
             if (!AuthService.hasAccess(userData.getRes(),userData.getRole() , regUs)) {
