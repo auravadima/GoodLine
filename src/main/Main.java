@@ -5,7 +5,7 @@ import domain.User;
 
 import java.util.ArrayList;
 
-public class Main {
+class Main {
 
     public static void main(String[] args) throws Exception {
         ArrayList<User> users = new ArrayList<>();
@@ -14,21 +14,23 @@ public class Main {
         users.add(new User("vasya", "qwerty"));
         users.add(new User("jdoe", "sup3rpaZZ"));
         users.add(new User("jrow", "Qweqrty12"));
-        users.add(new User("UWA","HDP"));
+        users.add(new User("UWA", "HDP"));
 
-        users.get(0).addAccess("A.B","WRITE");
-        users.get(1).addAccess("A.K.Y","READ");
-        users.get(2).addAccess("a","READ");
+        users.get(0).addAccess("A.B", "WRITE");
+        users.get(1).addAccess("A.K.Y", "READ");
+        users.get(2).addAccess("a", "READ");
         users.get(2).addAccess("a.b", "WRITE");
-        users.get(3).addAccess("a.b.c","EXECUTE");
+        users.get(3).addAccess("a.b.c", "EXECUTE");
         users.get(3).addAccess("a.bc", "EXECUTE");
 
+        users.get(0).addInf("2015-12-12", "2016-10-10", "354");
+
         CmdArgsParser cmdParser = new CmdArgsParser();
-        if(cmdParser.parse(args) == null){
+        DataSet userData = cmdParser.parse(args);
+        if (userData == null) {
             CmdArgsParser.help();
             System.exit(0);
         }
-        DataSet userData = cmdParser.parse(args);
 
         User regUs = AuthService.findUser(userData.getLogin(), users);
 
@@ -44,7 +46,7 @@ public class Main {
             if (!Roles.isDefined(userData.getRole())) {
                 System.exit(3);
             }
-            if (!AuthService.hasAccess(userData.getRes(),userData.getRole() , regUs)) {
+            if (!AuthService.hasAccess(userData.getRes(), userData.getRole(), regUs)) {
                 System.exit(4);
             }
         }
