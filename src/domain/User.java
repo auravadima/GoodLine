@@ -11,6 +11,7 @@ public class User {
     private String pass;
     private String salt;
     private ArrayList<Authorization> acc = new ArrayList<>();
+    //Данные этой коллекции не используются, происходит только сохранение данных в неё, но эти данные нам будут нужны
     private ArrayList<Accounting> inf = new ArrayList<>();
 
     public User(String login, String pass) throws NoSuchAlgorithmException {
