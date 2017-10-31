@@ -1,7 +1,7 @@
 package domain;
 
 public enum Roles {
-    READ, WRITE, EXECUTE,UNDEFINED;
+    READ, WRITE, EXECUTE, UNDEFINED;
 
     public static boolean isDefined(String role) {
         try {
