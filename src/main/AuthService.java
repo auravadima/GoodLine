@@ -1,7 +1,5 @@
 package main;
 
-import domain.Accounting;
-import domain.Roles;
 import domain.User;
 
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class AuthService {
+class AuthService {
 
     static User findUser(String login, ArrayList<User> users) {
         for (User user : users) {
@@ -22,7 +20,7 @@ public class AuthService {
     }
 
     static boolean isRightPass(String usPass, User regUs) throws NoSuchAlgorithmException {
-        return regUs.getPass().equals(Passwords.getHash(usPass, regUs.getSalt()));
+        return Passwords.isEqual(regUs.getPass().getBytes(), Passwords.getHash(usPass, regUs.getSalt()).getBytes());
     }
 
     static boolean isVolValid(String vol) {
