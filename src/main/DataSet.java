@@ -1,11 +1,5 @@
 package main;
 
-import domain.Accounting;
-import domain.Authorization;
-import domain.Roles;
-
-import java.security.NoSuchAlgorithmException;
-
 class DataSet {
     private String login;
     private String pass;
