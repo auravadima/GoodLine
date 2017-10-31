@@ -50,6 +50,7 @@ class AuthService {
             return true;
         }
         String[] userRes = res.split("\\.");
+        //Поэлементное сравнение строк, которые являются путями доступа нашего и уже зарегистрированно пользователей
         for (int i = 0; i < regUs.getAcc().size(); i++) {
             if (role.equals(regUs.getAcc().get(i).role.toString())) {
                 String[] accessRes = regUs.getAcc().get(i).res.split("\\.");
