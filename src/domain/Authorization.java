@@ -7,6 +7,10 @@ public class Authorization {
 
     Authorization(String res, String role) {
         this.res = res;
-        this.role = Roles.valueOf(role);
+        try {
+            this.role = Roles.valueOf(role);
+        } catch (IllegalArgumentException e) {
+            this.role = Roles.UNDEFINED;
+        }
     }
 }
