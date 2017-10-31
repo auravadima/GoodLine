@@ -32,7 +32,7 @@ public class Passwords {
         String symbols = "abcdefghijklmopqwertuvwxyz1234567890";
         //Инициализация объекта класса StringBuilder
         StringBuilder randString = new StringBuilder();
-        //Добавление в строку рандомного символа один
+        //Добавление в строку рандомного символа один за другим
         for (int i = 0; i < COUNT_OF_SYMBOLS; i++) {
             randString.append(symbols.charAt((int) (Math.random() * symbols.length())));
         }
@@ -47,7 +47,7 @@ public class Passwords {
         return hash(hash(pass) + salt);
     }
 
-    public static boolean isEqual(byte[] a, byte[] b) {
+    static boolean isEqual(byte[] a, byte[] b) {
         if (a.length != b.length) {
             return false;
         }
