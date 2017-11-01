@@ -4,9 +4,6 @@ import domain.Authorization;
 import domain.User;
 
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -50,8 +47,8 @@ class AuthService {
             return true;
         }
         for (Authorization authInf : regUs.getAcc()) {
-            if(role.equals(authInf.role.toString())){
-                if(res.startsWith(authInf.res)){
+            if (role.equals(authInf.role.toString())) {
+                if (res.startsWith(authInf.res)) {
                     return true;
                 }
             }
