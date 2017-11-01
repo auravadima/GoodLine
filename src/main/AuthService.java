@@ -3,8 +3,10 @@ package main;
 import domain.User;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -33,12 +35,10 @@ class AuthService {
     }
 
     static boolean isDateValid(String ds) {
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.setLenient(false);
-        format.applyPattern("yyyy-MM-dd");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            format.parse(ds);
-        } catch (ParseException e) {
+            java.time.LocalDate.parse(ds,format);
+        } catch (java.time.format.DateTimeParseException e) {
             return false;
         }
         return true;
