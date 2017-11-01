@@ -1,7 +1,5 @@
 package domain;
 
-import main.Passwords;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -17,16 +15,14 @@ public class User {
     public User(String login, String pass) throws NoSuchAlgorithmException {
         this.login = login;
         this.pass = pass;
-        setSalt();
-    }
-
-    private void setSalt() throws NoSuchAlgorithmException {
-        this.salt = Passwords.randSalt();
-        this.pass = Passwords.getHash(this.pass, this.salt);
     }
 
     public String getSalt() {
         return this.salt;
+    }
+
+    public void setSalt(String salt) throws NoSuchAlgorithmException {
+        this.salt = salt;
     }
 
     public String getLogin() {
@@ -35,6 +31,10 @@ public class User {
 
     public String getPass() {
         return this.pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public ArrayList<Authorization> getAcc() {
