@@ -10,16 +10,24 @@ class DataSet {
     private String role;
     private boolean isHelp;
 
+    /**
+     * Проверка наличия данных необходимых для аутентификации
+     */
     boolean hasAuthenticationData() {
         return (this.login != null && this.pass != null);
     }
 
+    /**
+     * Проверка наличия данных необходимых для авторизации
+     */
     boolean hasAuthorizationData() {
         return (hasAuthenticationData() && this.res != null && this.role != null);
     }
 
+    /**
+     * Проверка наличия данных необходимых для аккаунтинга
+     */
     boolean hasAccountingData() {
-
         return (hasAuthorizationData() && this.ds != null && this.de != null && this.vol != null);
     }
 
