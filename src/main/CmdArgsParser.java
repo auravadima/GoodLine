@@ -28,10 +28,8 @@ class CmdArgsParser {
 
         DataSet set = new DataSet();
         cmd = parser.parse(option, args);
-        if (cmd.hasOption("h")) {
-            help();
-            return null;
-        }
+
+        set.setHelp(cmd.hasOption("h"));
         set.setLogin(cmd.getOptionValue("login"));
         set.setPass(cmd.getOptionValue("pass"));
         set.setRes(cmd.getOptionValue("res"));
