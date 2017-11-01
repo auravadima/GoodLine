@@ -16,6 +16,11 @@ class Main {
         users.add(new User("jrow", "Qweqrty12"));
         users.add(new User("UWA", "HDP"));
 
+        for (User user : users) {
+            user.setSalt(Passwords.randSalt());
+            user.setPass(Passwords.getHash(user.getPass(), user.getSalt()));
+        }
+
         users.get(0).addAccess("A.B", "WRITE");
         users.get(1).addAccess("A.K.Y", "READ");
         users.get(2).addAccess("a", "READ");
