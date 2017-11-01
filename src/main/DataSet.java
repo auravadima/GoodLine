@@ -8,6 +8,7 @@ class DataSet {
     private String vol;
     private String res;
     private String role;
+    private boolean isHelp;
 
     boolean hasAuthenticationData() {
         return (this.login != null && this.pass != null);
@@ -76,5 +77,13 @@ class DataSet {
 
     void setRole(String role) {
         this.role = role;
+    }
+
+    boolean getHelp() {
+        return isHelp;
+    }
+
+    void setHelp(boolean help) {
+        this.isHelp = help;
     }
 }
