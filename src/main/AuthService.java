@@ -1,5 +1,6 @@
 package main;
 
+import domain.Authorization;
 import domain.User;
 
 import java.security.NoSuchAlgorithmException;
@@ -37,7 +38,7 @@ class AuthService {
     static boolean isDateValid(String ds) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            java.time.LocalDate.parse(ds,format);
+            java.time.LocalDate.parse(ds, format);
         } catch (java.time.format.DateTimeParseException e) {
             return false;
         }
@@ -45,22 +46,12 @@ class AuthService {
     }
 
     static boolean hasAccess(String res, String role, User regUs) {
-        boolean hasAccess = false;
         if (role == null) {
             return true;
         }
-        String[] userRes = res.split("\\.");
-        //Поэлементное сравнение строк, которые являются путями доступа нашего и уже зарегистрированно пользователей
-        for (int i = 0; i < regUs.getAcc().size(); i++) {
-            if (role.equals(regUs.getAcc().get(i).role.toString())) {
-                String[] accessRes = regUs.getAcc().get(i).res.split("\\.");
-                if (userRes.length < accessRes.length) {
-                    continue;
-                }
-                for (int k = 0; k < accessRes.length; k++) {
-                    hasAccess = accessRes[k].equals(userRes[k]);
-                }
-                if (hasAccess) {
+        for (Authorization authInf : regUs.getAcc()) {
+            if(role.equals(authInf.role.toString())){
+                if(res.startsWith(authInf.res)){
                     return true;
                 }
             }
