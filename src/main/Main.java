@@ -32,7 +32,7 @@ class Main {
 
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
-        if (userData == null) {
+        if (userData == null || userData.getHelp()) {
             CmdArgsParser.help();
             System.exit(0);
         }
