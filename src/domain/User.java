@@ -41,7 +41,7 @@ public class User {
         return this.acc;
     }
 
-    public void addAccess(String res, String role) {
+    public void addAccess(String res, Roles role) {
         this.acc.add(new Authorization(res, role));
     }
 

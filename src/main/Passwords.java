@@ -14,16 +14,15 @@ class Passwords {
         MessageDigest md = MessageDigest.getInstance("MD5");
         //Обновление дайджеста массивом байтов
         md.update(pass.getBytes());
-
         byte byteData[] = md.digest();
         //Инициализация объекта класса StringBuilder
         StringBuilder sb = new StringBuilder();
         for (byte aByteData : byteData) {
             /*
             Без значения & 0xff значения, превышающие 0x7f, окажутся отрицательными значениями int.
-            добавление 0x10  просто включает бит в индекс 8 (так как он гарантированно равен 0 in (aByteData & 0xff)
+            добавление 0x100  просто включает бит в индекс 8 (так как он гарантированно равен 0 in (aByteData & 0xff)
             Причина первого добавления 0x100, должна гарантировать три шестнадцатеричные цифры в конечном результате.
-            В противном случае значения байтов ниже 0x10 в результате будут переведены в шестнадцатеричный.
+            В противном случае значения байтов ниже 0x10 в результате будут переведены в один шестнадцатеричный символ.
             Затем снимается лишняя шетнадцатиричная цифра с помощью substring(1) для получения двух цифр.
             */
             sb.append(Integer.toString((aByteData & 0xff) + 0x100 ,16)).substring(1);
@@ -54,7 +53,11 @@ class Passwords {
         return hash(hash(pass) + salt);
     }
 
-    static boolean isEqual(byte[] a, byte[] b) {
+
+    static boolean safeCompare(String a, String b) {
+        return safeCompare(a.getBytes(),b.getBytes());
+    }
+    static boolean safeCompare(byte[] a, byte[] b) {
         if (a.length != b.length) {
             return false;
         }

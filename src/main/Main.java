@@ -5,6 +5,8 @@ import domain.User;
 
 import java.util.ArrayList;
 
+import static domain.Roles.*;
+
 class Main {
 
     public static void main(String[] args) throws Exception {
@@ -21,12 +23,12 @@ class Main {
             user.setPass(Passwords.getHash(user.getPass(), user.getSalt()));
         }
 
-        users.get(0).addAccess("A.B", "WRITE");
-        users.get(1).addAccess("A.K.Y", "READ");
-        users.get(2).addAccess("a", "READ");
-        users.get(2).addAccess("a.b", "WRITE");
-        users.get(3).addAccess("a.b.c", "EXECUTE");
-        users.get(3).addAccess("a.bc", "EXECUTE");
+        users.get(0).addAccess("A.B", WRITE);
+        users.get(1).addAccess("A.K.Y", READ);
+        users.get(2).addAccess("a", READ);
+        users.get(2).addAccess("a.b", WRITE);
+        users.get(3).addAccess("a.b.c", EXECUTE);
+        users.get(3).addAccess("a.bc", EXECUTE);
 
         users.get(0).addInf("2015-12-12", "2016-10-10", "354");
 

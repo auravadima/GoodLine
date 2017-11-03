@@ -20,26 +20,25 @@ class AuthService {
     }
 
     static boolean isRightPass(String usPass, User regUs) throws NoSuchAlgorithmException {
-        return Passwords.isEqual(regUs.getPass().getBytes(), Passwords.getHash(usPass, regUs.getSalt()).getBytes());
+        return Passwords.safeCompare(regUs.getPass(), Passwords.getHash(usPass, regUs.getSalt()));
     }
 
     static boolean isVolValid(String vol) {
         try {
             Integer.parseInt(vol);
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }
-        return true;
     }
 
     static boolean isDateValid(String ds) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            java.time.LocalDate.parse(ds, format);
+            java.time.LocalDate.parse(ds);
+            return true;
         } catch (java.time.format.DateTimeParseException e) {
             return false;
         }
-        return true;
     }
 
     static boolean hasAccess(String res, String role, User regUs) {

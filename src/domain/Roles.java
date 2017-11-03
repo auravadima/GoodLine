@@ -12,11 +12,4 @@ public enum Roles {
         return true;
     }
 
-    public static Roles fromString(String role) {
-        try {
-            return Roles.valueOf(role);
-        } catch (IllegalArgumentException e) {
-            return Roles.UNDEFINED;
-        }
-    }
 }
