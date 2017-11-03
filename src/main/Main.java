@@ -34,7 +34,7 @@ class Main {
 
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
-        if (userData == null || userData.getHelp()) {
+        if (userData .getLogin() == null || userData.getHelp()) {
             CmdArgsParser.help();
             System.exit(0);
         }

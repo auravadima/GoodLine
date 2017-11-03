@@ -45,9 +45,11 @@ class AuthService {
         if (role == null) {
             return true;
         }
+        res = res + ".";
         for (Authorization authInf : regUs.getAcc()) {
             if (role.equals(authInf.role.toString())) {
-                if (res.startsWith(authInf.res)) {
+                String usRes = authInf.res + ".";
+                if (res.startsWith(usRes)) {
                     return true;
                 }
             }

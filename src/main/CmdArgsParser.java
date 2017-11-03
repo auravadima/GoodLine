@@ -15,7 +15,7 @@ class CmdArgsParser {
                 .addOption("ds", true, "Enter start date")
                 .addOption("de", true, "Enter end date (required if ds argument exists")
                 .addOption("vol", true, "Enter vol (required if ds/de argument exists")
-                .addOption("h", "help", true, "Show help");
+                .addOption("h", "help", false, "Show help");
     }
 
     static void help() {
