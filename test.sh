@@ -81,4 +81,40 @@ test 4 '-l UWA -p HDP -res A.B -role WRITE'
 #32
 test 4 '-l UWA -p HDP -res . -role READ'
 
+#123456789
+#33
+test 0 ''
+#34
+test 0 '-h'
+#35
+test 1  '-login XXX -pass XXX'
+#36
+test 2  '-login jdoe -pass XXX'
+#37
+test 0  '-login jdoe -pass sup3rpaZZ'
+#38
+test 1  '-login xxx -pass yyy'
+#39
+test 0  '-login jdoe -pass sup3rpaZZ -role READ -res a'
+#40
+test 0  '-login jdoe -pass sup3rpaZZ -role READ -res a.b'
+#41
+test 3  '-login jdoe -pass sup3rpaZZ -role XXX -res a.b'
+#42
+test 4  '-login jdoe -pass sup3rpaZZ -role READ -res XXX'
+#43
+test 4  '-login jdoe -pass sup3rpaZZ -role WRITE -res a'
+#44
+test 4  '-login jdoe -pass sup3rpaZZ -role WRITE -res a.bc'
+#45
+test 0  '-login jdoe -pass sup3rpaZZ -role READ -res a.b -ds 2015-01-01 -de 2015-12-31 -vol 100'
+#46
+test 5  '-login jdoe -pass sup3rpaZZ -role READ -res a.b -ds 01-01-2015 -de 2015-12-31 -vol 100'
+#47
+test 5  '-login jdoe -pass sup3rpaZZ -role READ -res a.b -ds 2015-01-01 -de 2015-12-31 -vol XXX'
+#48
+test 1  '-login X -pass X -role READ -res X -ds 2015-01-01 -de 2015-12-31 -vol XXX'
+#49
+test 1  '-login X -pass X -role READ -res X'
+
 echo $x of $y
