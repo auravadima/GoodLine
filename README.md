@@ -19,7 +19,6 @@
 Для тестирования запустите  
 <code>./TEST.sh</code>
 
-# Статус тестов на trevis'е
-
+# Статус билда
 [![Build Status](https://travis-ci.org/auravadima/auravadima.github.io.svg?branch=master)](https://travis-ci.org/auravadima/auravadima.github.io)
 
