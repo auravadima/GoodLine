@@ -1,2 +1,2 @@
 language: java
-script: bash BUILD.sh && bash TEST.sh
+script: bash BUILD.sh;bash TEST.sh
