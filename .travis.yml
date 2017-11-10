@@ -1,2 +1,2 @@
 language: java
-script: bundle exec bash BUILD.sh && bundle exec bash TEST.sh
+script: bash BUILD.sh && bash TEST.sh
