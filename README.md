@@ -7,8 +7,8 @@
 
 # Ссылки на выполненные или выполняющиеся наборы требований
 
-[Первый набор](https://auravadima.github.io/release-1.md "Первый набор")  
-[Второй набор](https://auravadima.github.io/Roadmap2.md "Второй набор")  
+[Первый набор](https://auravadima.github.io/release-1 "Первый набор")  
+[Второй набор](https://auravadima.github.io/Roadmap2 "Второй набор")  
 
 # Руководство
 
