@@ -24,7 +24,7 @@ fi
 #1
 test 0 '-l auravadima -p rAAzhyGF'
 #2
-test 4 '-l auravadima -p qwertyui'
+test 2 '-l auravadima -p qwertyui'
 #3
 test 1 '-l user -p rAAzhyGF'
 #4
