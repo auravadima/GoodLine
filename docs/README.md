@@ -7,8 +7,8 @@
 
 # Ссылки на выполненные или выполняющиеся наборы требований
 
-[Первый набор](https://auravadima.github.io/Goodline//docs/release-1 "Первый набор")  
-[Второй набор](https://github.com/auravadima/Goodline/docs/Roadmap2 "Второй набор")  
+[Первый набор](https://github.com/auravadima/Goodline/release-1 "Первый набор")  
+[Второй набор](https://github.com/auravadima/Goodline/Roadmap2 "Второй набор")  
 
 # Руководство
 
