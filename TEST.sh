@@ -15,9 +15,11 @@ test() {
 if (($? == $1))
   then
       echo SUCCESS
+      echo $2
       x+=1
   else
       echo FAILURE
+      echo $2
       exit 1
 fi
 }
