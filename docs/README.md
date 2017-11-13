@@ -7,12 +7,18 @@
 
 # Ссылки на выполненные или выполняющиеся наборы требований
 
-[Первый набор](https://auravadima.github.io/release-1.md "Первый набор")  
-[Второй набор](https://auravadima.github.io/Roadmap2.md "Второй набор")  
+[Первый набор](https://auravadima.github.io/release-1 "Первый набор")  
+[Второй набор](https://auravadima.github.io/Roadmap2 "Второй набор")  
 
 # Руководство
 
-Для компиляции проекта в командной строке перейдите в корневую папку и введите <code>./BUILD.sh</code>  
-Для запуска в командной строке перейдите в корневую папку и введите <code>./RUN.sh "Ваши аргументы"</code>  
-Для тестирования запустите <code>./TEST.sh</code>
+Для компиляции проекта в командной строке перейдите в корневую папку и введите  
+<code>./BUILD.sh</code>  
+Для запуска в командной строке перейдите в корневую папку и введите  
+<code>./RUN.sh "Ваши аргументы"</code>  
+Для тестирования запустите  
+<code>./TEST.sh</code>
+
+# Статус билда
+[![Build Status](https://travis-ci.org/auravadima/auravadima.github.io.svg?branch=master)](https://travis-ci.org/auravadima/auravadima.github.io)
 
