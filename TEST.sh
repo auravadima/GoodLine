@@ -11,7 +11,7 @@ fi
 test() {
   echo test $(( $y + 1)) error $1 was expected
   y+=1
-  $comand $2
+  $comand $2 2>> aaa.log
 if (($? == $1))
   then
       echo SUCCESS
