@@ -38,7 +38,7 @@ class Main {
 
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
-        if (userData .getLogin() == null || userData.getHelp()) {
+        if (userData.getLogin() == null || userData.getHelp()) {
             CmdArgsParser.help();
             System.exit(0);
         }
@@ -51,7 +51,7 @@ class Main {
                 System.exit(1);
             }
             if (!AuthService.isRightPass(userData.getPass(), regUs)) {
-                log.printPassError(userData.getPass(),regUs.getLogin());
+                log.printPassError(userData.getPass(), regUs.getLogin());
                 System.exit(2);
             }
         }
@@ -61,7 +61,7 @@ class Main {
                 System.exit(3);
             }
             if (!AuthService.hasAccess(userData.getRes(), userData.getRole(), regUs)) {
-                log.printAccessError(userData.getRes(),userData.getRole(),userData.getLogin());
+                log.printAccessError(userData.getRes(), userData.getRole(), userData.getLogin());
                 System.exit(4);
             }
         }
