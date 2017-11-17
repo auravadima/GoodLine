@@ -1,5 +1,6 @@
 package main;
 
+import domain.LogOut;
 import domain.Roles;
 import domain.User;
 
@@ -10,6 +11,9 @@ import static domain.Roles.*;
 class Main {
 
     public static void main(String[] args) throws Exception {
+
+        LogOut log = new LogOut();
+
         ArrayList<User> users = new ArrayList<>();
 
         users.add(new User("auravadima", "rAAzhyGF"));
@@ -43,17 +47,21 @@ class Main {
 
         if (userData.hasAuthenticationData()) {
             if (regUs == null) {
+                log.printLoginError(userData.getLogin());
                 System.exit(1);
             }
             if (!AuthService.isRightPass(userData.getPass(), regUs)) {
+                log.printPassError(userData.getPass(),regUs.getLogin());
                 System.exit(2);
             }
         }
         if (userData.hasAuthorizationData()) {
             if (!Roles.isDefined(userData.getRole())) {
+                log.printRoleError(userData.getRole());
                 System.exit(3);
             }
             if (!AuthService.hasAccess(userData.getRes(), userData.getRole(), regUs)) {
+                log.printAccessError(userData.getRes(),userData.getRole(),userData.getLogin());
                 System.exit(4);
             }
         }
@@ -61,6 +69,7 @@ class Main {
                 && (!AuthService.isDateValid(userData.getDs())
                 || !AuthService.isDateValid(userData.getDe())
                 || !AuthService.isVolValid(userData.getVol()))) {
+            log.printAccountingError(userData.getLogin());
             System.exit(5);
         }
         System.exit(0);
