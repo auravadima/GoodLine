@@ -4,15 +4,16 @@ declare -i x=0
 declare -i y=0
 comand=""
 if [[ "$OSTYPE" == "win32" ]]; then
-        comand="java -classpath bin;libs/commons-cli-1.4.jar main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin;libs/commons-cli-1.4.jar main.Main"
 else
-        comand="java -classpath bin:libs/commons-cli-1.4.jar main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin:libs/commons-cli-1.4.jar main.Main"
 fi
 test() {
   echo test $(( $y + 1)) error $1 was expected
   y+=1
-  $comand $2 2>> aaa.log
-if (($? == $1))
+  $comand $2
+  myV=$?
+if ((myV == $1))
   then
       echo SUCCESS
       echo $2
@@ -21,6 +22,10 @@ if (($? == $1))
       echo FAILURE
       echo $2
       exit 1
+fi
+if  ((myV > 0))
+    then
+        cat templog.log >> aaa.log
 fi
 }
 #1
