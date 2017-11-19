@@ -32,6 +32,7 @@ class Passwords {
 
     /**
      * Возвращает рандомную строку длины 25, состоящую из элементов [a-zA-Z0-9]
+     * Сейчас не используется потому что нет функции регистрации нового пользователя
      */
     static String randSalt() {
         //Набор символов
@@ -57,7 +58,7 @@ class Passwords {
     static boolean safeCompare(String a, String b) {
         return safeCompare(a.getBytes(),b.getBytes());
     }
-    static boolean safeCompare(byte[] a, byte[] b) {
+    private static boolean safeCompare(byte[] a, byte[] b) {
         if (a.length != b.length) {
             return false;
         }

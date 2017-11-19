@@ -2,10 +2,18 @@ package main;
 
 import domain.LogOut;
 import domain.Roles;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.MigrationInfoService;
 
 class Main {
 
     public static void main(String[] args) throws Exception {
+
+        Flyway flyway = new Flyway();
+        flyway.setLocations("db/migrations");
+        flyway.setDataSource("jdbc:h2:~/test", "auravadima", "rAAzhyGF1");
+        flyway.baseline();
+        flyway.migrate();
 
         LogOut log = new LogOut();
 
