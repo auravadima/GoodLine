@@ -36,9 +36,5 @@ class DB {
     String createQuery(String table, String row) throws SQLException, ClassNotFoundException {
         return String.format("SELECT * FROM %s WHERE LOGIN='%s'", table, row);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> af6e46f23f0553684cf58008624fb7a7139bfc2f
 }
 
