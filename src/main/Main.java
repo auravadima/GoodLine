@@ -9,12 +9,13 @@ class Main {
     public static void main(String[] args) throws Exception {
 
         Flyway flyway = new Flyway();
-        flyway.setLocations("db/migrations");
-        flyway.setDataSource("jdbc:h2:~/test", "auravadima", "rAAzhyGF1");
-        if(flyway.getSchemas() == null){
+        flyway.setLocations("db/migration");
+        flyway.setDataSource("jdbc:h2:file:~/database", "auravadima", "rAAzhyGF1");
+        try {
+            flyway.info().current().getVersion();
+        } catch (Exception e) {
             flyway.migrate();
         }
-
         LogOut log = new LogOut();
 
         CmdArgsParser cmdParser = new CmdArgsParser();
