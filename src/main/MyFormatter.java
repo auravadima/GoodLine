@@ -1,4 +1,4 @@
-package domain;
+package main;
 
 import java.util.Date;
 import java.util.logging.Formatter;
