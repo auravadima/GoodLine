@@ -4,9 +4,9 @@ declare -i x=0
 declare -i y=0
 comand=""
 if [[ "$OSTYPE" == "win32" ]]; then
-        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin;libs/commons-cli-1.4.jar main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin;libs/commons-cli-1.4.jar;libs/h2-1.4.196.jar main.Main"
 else
-        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin:libs/commons-cli-1.4.jar main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin:libs/commons-cli-1.4.jar:libs/h2-1.4.196.jar main.Main"
 fi
 test() {
   echo test $(( $y + 1)) error $1 was expected
@@ -31,7 +31,7 @@ fi
 #1
 test 0 '-l auravadima -p rAAzhyGF'
 #2
-test 2 '-l auravadima -p qwertyui'
+test 2 '-l auravadima -p qwertyui' 
 #3
 test 1 '-l user -p rAAzhyGF'
 #4
