@@ -1,26 +1,33 @@
 package main;
 
-import domain.Authorization;
-import domain.User;
-
 import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 class AuthService {
 
-    static User findUser(String login, ArrayList<User> users) {
-        for (User user : users) {
-            if (login.equals(user.getLogin())) {
-                return user;
+    static Boolean userExist(String login) throws SQLException, ClassNotFoundException {
+        DB db = new DB();
+        Connection conn = db.getConn();
+        ResultSet rs = db.getRS("SELECT LOGIN FROM USERS", conn);
+        ArrayList<String> logins = db.getResultArray(rs, "LOGIN");
+        for (String login1 : logins) {
+            if (login.equals(login1)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
-    static boolean isRightPass(String usPass, User regUs) throws NoSuchAlgorithmException {
-        return Passwords.safeCompare(regUs.getPass(), Passwords.getHash(usPass, regUs.getSalt()));
+    static boolean isRightPass(String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        DB db = new DB();
+        Connection conn = db.getConn();
+        ResultSet rs = db.getRS(String.format("SELECT * FROM USERS WHERE LOGIN='%s'", login), conn);
+        rs.next();
+        return Passwords.safeCompare(rs.getString("PASS"), Passwords.getHash(usPass, rs.getString("SALT")));
     }
 
     static boolean isVolValid(String vol) {
@@ -41,14 +48,20 @@ class AuthService {
         }
     }
 
-    static boolean hasAccess(String res, String role, User regUs) {
+    static boolean hasAccess(String res, String role, String login) throws SQLException, ClassNotFoundException {
         if (role == null) {
             return true;
         }
         res = res + ".";
-        for (Authorization authInf : regUs.getAcc()) {
-            if (role.equals(authInf.role.toString())) {
-                String usRes = authInf.res + ".";
+        DB db = new DB();
+        Connection conn = db.getConn();
+        ResultSet rs = db.getRS(String.format("SELECT RES FROM AUTH WHERE LOGIN='%s'", login), conn);
+        ArrayList<String> ress = db.getResultArray(rs, "RES");
+        rs = db.getRS(String.format("SELECT ROLE FROM AUTH WHERE LOGIN='%s'", login), conn);
+        ArrayList<String> roles = db.getResultArray(rs, "ROLE");
+        for (int i = 0; i < ress.size(); i++) {
+            if (roles.get(i).equals(role)) {
+                String usRes = ress.get(i) + ".";
                 if (res.startsWith(usRes)) {
                     return true;
                 }
