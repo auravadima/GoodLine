@@ -1,1 +1,0 @@
-INSERT INTO ACC (LOGIN, DS, DE, VOL) VALUES ('auravadima', '2015-12-12', '2016-10-10', '354');
