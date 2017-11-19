@@ -11,7 +11,7 @@ class DB {
     Connection getConn() throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         return DriverManager
-                .getConnection("jdbc:h2:~/test", "auravadima", "rAAzhyGF1");
+                .getConnection("jdbc:h2:file:~/database", "auravadima", "rAAzhyGF1");
     }
 
     /**
