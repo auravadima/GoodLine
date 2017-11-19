@@ -25,7 +25,7 @@ class AuthService {
     static boolean isRightPass(String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         DB db = new DB();
         Connection conn = db.getConn();
-        ResultSet rs = db.getRS(String.format("SELECT * FROM USERS WHERE LOGIN='%s'", login), conn);
+        ResultSet rs = db.getRS(db.createQuery("USERS", login), conn);
         rs.next();
         return Passwords.safeCompare(rs.getString("PASS"), Passwords.getHash(usPass, rs.getString("SALT")));
     }
@@ -53,12 +53,15 @@ class AuthService {
             return true;
         }
         res = res + ".";
+
         DB db = new DB();
         Connection conn = db.getConn();
-        ResultSet rs = db.getRS(String.format("SELECT RES FROM AUTH WHERE LOGIN='%s'", login), conn);
+
+        ResultSet rs = db.getRS(db.createQuery("AUTH", login), conn);
         ArrayList<String> ress = db.getResultArray(rs, "RES");
-        rs = db.getRS(String.format("SELECT ROLE FROM AUTH WHERE LOGIN='%s'", login), conn);
+        rs = db.getRS(db.createQuery("AUTH", login), conn);
         ArrayList<String> roles = db.getResultArray(rs, "ROLE");
+
         for (int i = 0; i < ress.size(); i++) {
             if (roles.get(i).equals(role)) {
                 String usRes = ress.get(i) + ".";
