@@ -4,9 +4,9 @@ declare -i x=0
 declare -i y=0
 comand=""
 if [[ "$OSTYPE" == "win32" ]]; then
-        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin;libs/*;. main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin;libs/*;src main.Main"
 else
-        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin:libs/*:. main.Main"
+        comand="java -Djava.util.logging.config.file=logging.properties -classpath bin:libs/*:src main.Main"
 fi
 test() {
   echo test $(( $y + 1)) error $1 was expected
