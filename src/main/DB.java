@@ -32,7 +32,7 @@ class DB {
         }
         return result;
     }
-
+//aserghjgfds
     String createQuery(String table, String row) throws SQLException, ClassNotFoundException {
         return String.format("SELECT * FROM %s WHERE LOGIN='%s'", table, row);
     }
