@@ -3,6 +3,7 @@ package domain;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+//Не используется, потому что вся работа происходит в базе данных, а не с объектами класса User
 public class User {
 
     private String login;
