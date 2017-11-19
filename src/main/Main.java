@@ -11,7 +11,9 @@ class Main {
         Flyway flyway = new Flyway();
         flyway.setLocations("db/migrations");
         flyway.setDataSource("jdbc:h2:~/test", "auravadima", "rAAzhyGF1");
-        flyway.migrate();
+        if(flyway.getSchemas() == null){
+            flyway.migrate();
+        }
 
         LogOut log = new LogOut();
 
