@@ -32,37 +32,37 @@ class CmdArgsParser {
         set.setHelp(cmd.hasOption("h"));
         if (cmd.hasOption("login") && cmd.getOptionValue("login").matches("\\b[\\w]+\\b")) {
             set.setLogin(cmd.getOptionValue("login"));
-        } else if(cmd.hasOption("login")){
+        } else if (cmd.hasOption("login")) {
             set.setLogin("Incorrect");
         }
         if (cmd.hasOption("pass") && cmd.getOptionValue("pass").matches("\\b[\\w]+\\b")) {
             set.setPass(cmd.getOptionValue("pass"));
-        } else if(cmd.hasOption("pass")){
+        } else if (cmd.hasOption("pass")) {
             set.setPass("Incorrect");
         }
         if (cmd.hasOption("res") && cmd.getOptionValue("res").matches("\\b[\\w.]+\\b")) {
             set.setRes(cmd.getOptionValue("res"));
-        } else if(cmd.hasOption("res")){
+        } else if (cmd.hasOption("res")) {
             set.setRes("Incorrect");
         }
         if (cmd.hasOption("role") && cmd.getOptionValue("role").matches("\\b[A-Z]{4,7}+\\b")) {
             set.setRole(cmd.getOptionValue("role"));
-        } else if(cmd.hasOption("role")){
+        } else if (cmd.hasOption("role")) {
             set.setRole("Incorrect");
         }
         if (cmd.hasOption("ds") && cmd.getOptionValue("ds").matches("\\b\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")) {
             set.setDs(cmd.getOptionValue("ds"));
-        } else if(cmd.hasOption("ds")){
+        } else if (cmd.hasOption("ds")) {
             set.setDs("Incorrect");
         }
         if (cmd.hasOption("de") && cmd.getOptionValue("de").matches("\\b\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")) {
             set.setDe(cmd.getOptionValue("de"));
-        } else if(cmd.hasOption("de")){
+        } else if (cmd.hasOption("de")) {
             set.setDe("Incorrect");
         }
         if (cmd.hasOption("vol") && cmd.getOptionValue("vol").matches("\\b\\d+\\b")) {
             set.setVol(cmd.getOptionValue("vol"));
-        } else if(cmd.hasOption("vol")){
+        } else if (cmd.hasOption("vol")) {
             set.setVol("Incorrect");
         }
         return set;
