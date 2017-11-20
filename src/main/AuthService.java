@@ -14,6 +14,10 @@ class AuthService {
         Connection conn = db.getConn();
         ResultSet rs = db.getRS("SELECT LOGIN FROM USERS", conn);
         ArrayList<String> logins = db.getResultArray(rs, "LOGIN");
+
+        conn.close();
+        rs.close();
+
         for (String login1 : logins) {
             if (login.equals(login1)) {
                 return true;
@@ -27,7 +31,11 @@ class AuthService {
         Connection conn = db.getConn();
         ResultSet rs = db.getRS(db.createQuery("USERS", login), conn);
         rs.next();
-        return Passwords.safeCompare(rs.getString("PASS"), Passwords.getHash(usPass, rs.getString("SALT")));
+        String pass = rs.getString("PASS");
+        String salt = rs.getString("SALT");
+        conn.close();
+        rs.close();
+        return Passwords.safeCompare(pass, Passwords.getHash(usPass, salt));
     }
 
     static boolean isVolValid(String vol) {
@@ -59,8 +67,12 @@ class AuthService {
 
         ResultSet rs = db.getRS(db.createQuery("AUTH", login), conn);
         ArrayList<String> ress = db.getResultArray(rs, "RES");
+
         rs = db.getRS(db.createQuery("AUTH", login), conn);
         ArrayList<String> roles = db.getResultArray(rs, "ROLE");
+
+        conn.close();
+        rs.close();
 
         for (int i = 0; i < ress.size(); i++) {
             if (roles.get(i).equals(role)) {
