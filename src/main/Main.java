@@ -1,8 +1,10 @@
 package main;
 
-import domain.LogOut;
+import domain.Connect;
 import domain.Roles;
 import org.flywaydb.core.Flyway;
+
+import java.io.File;
 
 class Main {
 
@@ -10,30 +12,34 @@ class Main {
 
         Flyway flyway = new Flyway();
         flyway.setLocations("db/migration");
-        flyway.setDataSource("jdbc:h2:file:~/database", "auravadima", "rAAzhyGF1");
-        try {
-            flyway.info().current().getVersion();
-        } catch (Exception e) {
+        flyway.setDataSource("jdbc:h2:file:./database", "auravadima", "rAAzhyGF1");
+        if (!new File("./database.mv.db").exists()) {
             flyway.migrate();
         }
         LogOut log = new LogOut();
 
+        Connect cnt = new Connect(new DB());
+        cnt.setConn(cnt.getDB().getConnection());
+
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
         if (userData.getLogin() == null || userData.getHelp()) {
-            CmdArgsParser.help();
+            cmdParser.help();
+            cnt.getConn().close();
             System.exit(0);
         }
 
-        Boolean usExist = AuthService.userExist(userData.getLogin());
+        Boolean usExist = AuthService.userExist(cnt, userData.getLogin());
 
         if (userData.hasAuthenticationData()) {
             if (!usExist) {
                 log.printLoginError(userData.getLogin());
+                cnt.getConn().close();
                 System.exit(1);
             }
-            if (!AuthService.isRightPass(userData.getPass(), userData.getLogin())) {
+            if (!AuthService.isRightPass(cnt, userData.getPass(), userData.getLogin())) {
                 log.printPassError(userData.getLogin(), userData.getPass());
+                cnt.getConn().close();
                 System.exit(2);
             }
         }
@@ -41,10 +47,12 @@ class Main {
         if (userData.hasAuthorizationData()) {
             if (!Roles.isDefined(userData.getRole())) {
                 log.printRoleError(userData.getRole());
+                cnt.getConn().close();
                 System.exit(3);
             }
-            if (!AuthService.hasAccess(userData.getRes(), userData.getRole(), userData.getLogin())) {
+            if (!AuthService.hasAccess(cnt, userData.getRes(), userData.getRole(), userData.getLogin())) {
                 log.printAccessError(userData.getRes(), userData.getRole(), userData.getLogin());
+                cnt.getConn().close();
                 System.exit(4);
             }
         }
@@ -53,8 +61,10 @@ class Main {
                 || !AuthService.isDateValid(userData.getDe())
                 || !AuthService.isVolValid(userData.getVol()))) {
             log.printAccountingError(userData.getLogin());
+            cnt.getConn().close();
             System.exit(5);
         }
+        cnt.getConn().close();
         System.exit(0);
     }
 }
