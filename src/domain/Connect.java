@@ -8,17 +8,19 @@ public class Connect {
     private DB db;
     private Connection conn;
 
-    public Connect(DB db){
+    public Connect(DB db) {
         this.db = db;
     }
 
-    public DB getDB(){
+    public DB getDB() {
         return this.db;
     }
-    public void setConn(Connection conn){
+
+    public void setConn(Connection conn) {
         this.conn = conn;
     }
-    public Connection getConn(){
+
+    public Connection getConn() {
         return this.conn;
     }
 }
