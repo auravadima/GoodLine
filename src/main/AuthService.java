@@ -1,41 +1,41 @@
 package main;
 
+import domain.Connect;
+
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
 class AuthService {
 
-    static Boolean userExist(String login) throws SQLException, ClassNotFoundException {
-        DB db = new DB();
-        Connection conn = db.getConn();
-        ResultSet rs = db.getRS("SELECT LOGIN FROM USERS", conn);
-        ArrayList<String> logins = db.getResultArray(rs, "LOGIN");
+    static Boolean userExist(Connect cnt, String login) throws SQLException, ClassNotFoundException {
+        try (Statement st = cnt.getConn().createStatement();
+             ResultSet rs = st.executeQuery("SELECT LOGIN FROM USERS")) {
+            ArrayList<String> logins = cnt.getDB().getArray(rs);
 
-        conn.close();
-        rs.close();
-
-        for (String login1 : logins) {
-            if (login.equals(login1)) {
-                return true;
+            for (String login1 : logins) {
+                if (login.equals(login1)) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
 
-    static boolean isRightPass(String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
-        DB db = new DB();
-        Connection conn = db.getConn();
-        ResultSet rs = db.getRS(db.createQuery("USERS", login), conn);
-        rs.next();
-        String pass = rs.getString("PASS");
-        String salt = rs.getString("SALT");
-        conn.close();
-        rs.close();
-        return Passwords.safeCompare(pass, Passwords.getHash(usPass, salt));
+    static boolean isRightPass(Connect cnt, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        try (Statement st = cnt.getConn().createStatement();
+             ResultSet rs = st.executeQuery(cnt.getDB().createQuery("USERS", login))) {
+            String pass = null;
+            String salt = null;
+            if (rs.next()) {
+                pass = rs.getString("PASS");
+                salt = rs.getString("SALT");
+            }
+            return Passwords.safeCompare(pass, Passwords.getHash(usPass, salt));
+        }
     }
 
     static boolean isVolValid(String vol) {
@@ -56,32 +56,21 @@ class AuthService {
         }
     }
 
-    static boolean hasAccess(String res, String role, String login) throws SQLException, ClassNotFoundException {
+    static boolean hasAccess(Connect cnt, String res, String role, String login) throws SQLException, ClassNotFoundException {
         if (role == null) {
             return true;
         }
         res = res + ".";
+        try (Statement st = cnt.getConn().createStatement();
+             ResultSet rs = st.executeQuery(cnt.getDB().createQuery("AUTH", login))) {
+            ArrayList<ArrayList<String>> auth = cnt.getDB().getAuth(rs);
 
-        DB db = new DB();
-        Connection conn = db.getConn();
-
-        ResultSet rs = db.getRS(db.createQuery("AUTH", login), conn);
-        ArrayList<String> ress = db.getResultArray(rs, "RES");
-
-        rs = db.getRS(db.createQuery("AUTH", login), conn);
-        ArrayList<String> roles = db.getResultArray(rs, "ROLE");
-
-        conn.close();
-        rs.close();
-
-        for (int i = 0; i < ress.size(); i++) {
-            if (roles.get(i).equals(role)) {
-                String usRes = ress.get(i) + ".";
-                if (res.startsWith(usRes)) {
+            for (int i = 0; i < auth.get(0).size(); i++) {
+                if (auth.get(1).get(i).equals(role) && res.startsWith(auth.get(0).get(i))) {
                     return true;
                 }
             }
+            return false;
         }
-        return false;
     }
 }
