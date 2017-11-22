@@ -23,10 +23,6 @@ if ((myV == $1))
     echo FAILURE
     exit 1
 fi
-if  ((myV > 0))
-    then
-        cat templog.log >> aaa.log
-fi
 }
 #1
 test 0 '-l auravadima -p rAAzhyGF'
