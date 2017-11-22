@@ -17,6 +17,7 @@ class Main {
             flyway.migrate();
         }
         LogOut log = new LogOut();
+        AuthService authService = new AuthService();
 
         Connect cnt = new Connect(new DB());
         cnt.setConn(cnt.getDB().getConnection());
@@ -29,7 +30,7 @@ class Main {
             System.exit(0);
         }
 
-        Boolean usExist = AuthService.userExist(cnt, userData.getLogin());
+        Boolean usExist = authService.userExist(cnt, userData.getLogin());
 
         if (userData.hasAuthenticationData()) {
             if (!usExist) {
@@ -37,7 +38,7 @@ class Main {
                 cnt.getConn().close();
                 System.exit(1);
             }
-            if (!AuthService.isRightPass(cnt, userData.getPass(), userData.getLogin())) {
+            if (!authService.isRightPass(cnt, userData.getPass(), userData.getLogin())) {
                 log.printPassError(userData.getLogin(), userData.getPass());
                 cnt.getConn().close();
                 System.exit(2);
@@ -50,16 +51,16 @@ class Main {
                 cnt.getConn().close();
                 System.exit(3);
             }
-            if (!AuthService.hasAccess(cnt, userData.getRes(), userData.getRole(), userData.getLogin())) {
+            if (!authService.hasAccess(cnt, userData.getRes(), userData.getRole(), userData.getLogin())) {
                 log.printAccessError(userData.getRes(), userData.getRole(), userData.getLogin());
                 cnt.getConn().close();
                 System.exit(4);
             }
         }
         if (userData.hasAccountingData()
-                && (!AuthService.isDateValid(userData.getDs())
-                || !AuthService.isDateValid(userData.getDe())
-                || !AuthService.isVolValid(userData.getVol()))) {
+                && (!authService.isDateValid(userData.getDs())
+                || !authService.isDateValid(userData.getDe())
+                || !authService.isVolValid(userData.getVol()))) {
             log.printAccountingError(userData.getLogin());
             cnt.getConn().close();
             System.exit(5);
