@@ -27,4 +27,8 @@ class LogOut {
         logger.info(String.format("User %s entered inccorect data(ds,de,vol)", login));
     }
 
+    void printConnectioError(){
+        logger.info("Troubles with database connection");
+    }
+
 }
