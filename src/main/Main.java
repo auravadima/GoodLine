@@ -20,7 +20,12 @@ class Main {
         AuthService authService = new AuthService();
 
         Connect cnt = new Connect(new DB());
-        cnt.setConn(cnt.getDB().getConnection());
+        try {
+            cnt.setConn(cnt.getDB().getConnection());
+        }catch (Exception e){
+            log.printConnectioError();
+            System.exit(255);
+        }
 
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
