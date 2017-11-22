@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 class AuthService {
 
-    static Boolean userExist(Connect cnt, String login) throws SQLException, ClassNotFoundException {
+    Boolean userExist(Connect cnt, String login) throws SQLException, ClassNotFoundException {
         try (Statement st = cnt.getConn().createStatement();
              ResultSet rs = st.executeQuery("SELECT LOGIN FROM USERS")) {
             ArrayList<String> logins = cnt.getDB().getArray(rs);
@@ -25,7 +25,7 @@ class AuthService {
         }
     }
 
-    static boolean isRightPass(Connect cnt, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+    boolean isRightPass(Connect cnt, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         try (Statement st = cnt.getConn().createStatement();
              ResultSet rs = st.executeQuery(cnt.getDB().createQuery("USERS", login))) {
             String pass = null;
@@ -38,7 +38,7 @@ class AuthService {
         }
     }
 
-    static boolean isVolValid(String vol) {
+    boolean isVolValid(String vol) {
         try {
             Integer.parseInt(vol);
             return true;
@@ -47,7 +47,7 @@ class AuthService {
         }
     }
 
-    static boolean isDateValid(String ds) {
+    boolean isDateValid(String ds) {
         try {
             java.time.LocalDate.parse(ds);
             return true;
@@ -56,7 +56,7 @@ class AuthService {
         }
     }
 
-    static boolean hasAccess(Connect cnt, String res, String role, String login) throws SQLException, ClassNotFoundException {
+    boolean hasAccess(Connect cnt, String res, String role, String login) throws SQLException, ClassNotFoundException {
         if (role == null) {
             return true;
         }
