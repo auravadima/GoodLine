@@ -24,5 +24,5 @@
 <code>./TEST.sh</code>
 
 # Статус билда
-[![Build Status](https://travis-ci.org/auravadima/auravadima.github.io.svg?branch=master)](https://travis-ci.org/auravadima/auravadima.github.io)
+[![Build Status](https://travis-ci.org/auravadima/Goodline.svg?branch=master)](https://travis-ci.org/auravadima/Goodline)
 
