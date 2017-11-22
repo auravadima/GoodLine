@@ -1,11 +1,11 @@
 package main;
 
-
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 class LogOut {
 
-    private final Logger logger = Logger.getLogger(LogOut.class.getName());
+    private final Logger logger = LogManager.getRootLogger();
 
     void printLoginError(String login) {
         logger.info(String.format("Login %s does not exist", login));
