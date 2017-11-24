@@ -1,1 +1,1 @@
-java  -jar run.jar -l auravadima main.Main $@
+java  -jar run.jar main.Main $@
