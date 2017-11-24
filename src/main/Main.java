@@ -1,64 +1,59 @@
 package main;
 
-import domain.Connect;
 import domain.Roles;
-import org.flywaydb.core.Flyway;
-
-import java.io.File;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import services.AuthService;
 
 class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Flyway flyway = new Flyway();
-        flyway.setLocations("db/migration");
-        flyway.setDataSource("jdbc:h2:file:./database", "auravadima", "rAAzhyGF1");
-        if (!new File("./database.mv.db").exists()) {
-            flyway.migrate();
-        }
-        LogOut log = new LogOut();
+        final Logger logger = LogManager.getRootLogger();
         AuthService authService = new AuthService();
-
-        Connect cnt = new Connect(new DB());
+        DB db = null;
         try {
-            cnt.setConn(cnt.getDB().getConnection());
-        }catch (Exception e){
-            log.printConnectioError();
+            db = new DB();
+        } catch (Exception e) {
+            logger.info("Troubles with database connection");
             System.exit(255);
         }
+
+        db.migrate();
 
         CmdArgsParser cmdParser = new CmdArgsParser();
         DataSet userData = cmdParser.parse(args);
         if (userData.getLogin() == null || userData.getHelp()) {
             cmdParser.help();
-            cnt.getConn().close();
+            db.getConn().close();
             System.exit(0);
         }
 
-        Boolean usExist = authService.userExist(cnt, userData.getLogin());
+        Boolean usExist = authService.userExist(db, userData.getLogin());
 
         if (userData.hasAuthenticationData()) {
             if (!usExist) {
-                log.printLoginError(userData.getLogin());
-                cnt.getConn().close();
+                logger.info(String.format("Login %s does not exist", userData.getLogin()));
+                db.getConn().close();
                 System.exit(1);
             }
-            if (!authService.isRightPass(cnt, userData.getPass(), userData.getLogin())) {
-                log.printPassError(userData.getLogin(), userData.getPass());
-                cnt.getConn().close();
+            if (!authService.isRightPass(db, userData.getPass(), userData.getLogin())) {
+                logger.info(String.format("Password %s for user %s is incorrect", userData.getPass(), userData.getLogin()));
+                db.getConn().close();
                 System.exit(2);
             }
         }
 
         if (userData.hasAuthorizationData()) {
             if (!Roles.isDefined(userData.getRole())) {
-                log.printRoleError(userData.getRole());
-                cnt.getConn().close();
+                logger.info(String.format("Role %s is not defined", userData.getRole()));
+                db.getConn().close();
                 System.exit(3);
             }
-            if (!authService.hasAccess(cnt, userData.getRes(), userData.getRole(), userData.getLogin())) {
-                log.printAccessError(userData.getRes(), userData.getRole(), userData.getLogin());
-                cnt.getConn().close();
+            if (!authService.hasAccess(db, userData.getRes(), userData.getRole(), userData.getLogin())) {
+                logger.info(String.format("Path %s with role %s for user %s not avaliable",
+                        userData.getRes(), userData.getRole(), userData.getLogin()));
+                db.getConn().close();
                 System.exit(4);
             }
         }
@@ -66,11 +61,11 @@ class Main {
                 && (!authService.isDateValid(userData.getDs())
                 || !authService.isDateValid(userData.getDe())
                 || !authService.isVolValid(userData.getVol()))) {
-            log.printAccountingError(userData.getLogin());
-            cnt.getConn().close();
+            logger.info(String.format("User %s entered inccorect data(ds,de,vol)", userData.getLogin()));
+            db.getConn().close();
             System.exit(5);
         }
-        cnt.getConn().close();
+        db.getConn().close();
         System.exit(0);
     }
 }
