@@ -2,12 +2,7 @@
 
 declare -i x=0
 declare -i y=0
-comand=""
-if [[ "$OSTYPE" == "win32" ]]; then
-        comand="java -Dlog4j.configurationFile=log4j.xml -classpath bin;libs/*;src main.Main"
-else
-        comand="java -Dlog4j.configurationFile=log4j.xml -classpath bin:libs/*:src main.Main"
-fi
+comand="./RUN.sh"
 test() {
   echo test $(( $y + 1)) error $1 was expected
   y+=1
