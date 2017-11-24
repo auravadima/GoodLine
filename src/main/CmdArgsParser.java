@@ -30,27 +30,13 @@ class CmdArgsParser {
         DataSet set = new DataSet();
 
         set.setHelp(cmd.hasOption("h"));
-        if(cmd.hasOption("login")){
-            set.setLogin(cmd.getOptionValue("login").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("pass")){
-            set.setPass(cmd.getOptionValue("pass").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("res")){
-            set.setRes(cmd.getOptionValue("res").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("role")){
-            set.setRole(cmd.getOptionValue("role").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("ds")){
-            set.setDs(cmd.getOptionValue("ds").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("de")){
-            set.setDe(cmd.getOptionValue("de").replaceAll("['`~]+", ""));
-        }
-        if(cmd.hasOption("vol")){
-            set.setVol(cmd.getOptionValue("vol").replaceAll("['`~]+", ""));
-        }
+        set.setLogin(cmd.getOptionValue("l"));
+        set.setPass(cmd.getOptionValue("p"));
+        set.setDs(cmd.getOptionValue("ds"));
+        set.setDe(cmd.getOptionValue("de"));
+        set.setVol(cmd.getOptionValue("vol"));
+        set.setRes(cmd.getOptionValue("res"));
+        set.setRole(cmd.getOptionValue("role"));
         return set;
     }
 }
