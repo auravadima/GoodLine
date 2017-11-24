@@ -16,6 +16,7 @@ public class DB {
 
     private Connection conn;
     private String url;
+    private String driver;
 
     void migrate() throws IOException {
         Flyway flyway = new Flyway();
@@ -26,13 +27,17 @@ public class DB {
         }
     }
 
-    DB() throws SQLException, ClassNotFoundException, IOException {
+    DB() throws IOException {
         InputStream input = this.getClass().getClassLoader().getResourceAsStream("connection.properties");
         Properties prop = new Properties();
         prop.load(input);
         url = prop.getProperty("url");
+        driver = prop.getProperty("driver");
         input.close();
-        Class.forName(prop.getProperty("driver"));
+    }
+
+    void connect() throws IOException, ClassNotFoundException, SQLException {
+        Class.forName(driver);
         this.conn = DriverManager
                 .getConnection(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
     }
