@@ -6,18 +6,17 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 
 public class AuthService {
 
     public Boolean userExist(DB db, String login) throws SQLException, ClassNotFoundException {
-        try (Statement st = db.getConn().createStatement()) {
-            try (ResultSet rs = st.executeQuery("SELECT LOGIN FROM USERS")) {
-                ArrayList<String> logins = db.getArray(rs, "LOGIN");
-                for (String login1 : logins) {
-                    if (login.equals(login1)) {
+        try (PreparedStatement ps = db.getConn().prepareStatement("SELECT LOGIN FROM USERS WHERE LOGIN=?")) {
+            ps.setString(1, login);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    if (login.equals(rs.getString("LOGIN"))) {
                         return true;
                     }
                 }
@@ -68,11 +67,11 @@ public class AuthService {
         try (PreparedStatement ps = db.getConn().prepareStatement("SELECT * FROM AUTH WHERE LOGIN=?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
-                ArrayList<String> resList = db.getArray(rs, "RES");
-                ArrayList<String> roleList = db.getArray(rs, "ROLE");
+                ArrayList<String> resList = new ArrayList<>();
+                ArrayList<String> roleList = new ArrayList<>();
                 while (rs.next()) {
-                    resList.add(rs.getString("RES") + ".");
                     roleList.add(rs.getString("ROLE"));
+                    resList.add(rs.getString("RES") + ".");
                 }
                 for (int i = 0; i < resList.size(); i++) {
                     if (roleList.get(i).equals(role) && res.startsWith(resList.get(i))) {
