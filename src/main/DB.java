@@ -1,40 +1,52 @@
 package main;
 
-import java.sql.*;
+import org.flywaydb.core.Flyway;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class DB {
 
-    Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.h2.Driver");
-        return DriverManager
-                .getConnection("jdbc:h2:file:./database", "auravadima", "rAAzhyGF1");
-    }
+    private Connection conn;
+    private String url;
 
-    ArrayList<ArrayList<String>> getAuth(ResultSet rs) throws SQLException {
-        ArrayList<ArrayList<String>> auth = new ArrayList<>();
-        ArrayList<String> res = new ArrayList<>();
-        ArrayList<String> role = new ArrayList<>();
-        while (rs.next()) {
-            res.add(rs.getString("RES") + ".");
-            role.add(rs.getString("ROLE"));
+    void migrate() throws IOException {
+        Flyway flyway = new Flyway();
+        flyway.setLocations("db/migration");
+        flyway.setDataSource(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
+        if (!new File("./database.mv.db").exists()) {
+            flyway.migrate();
         }
-        auth.add(res);
-        auth.add(role);
-        return auth;
     }
 
-    ArrayList<String> getArray(ResultSet rs) throws SQLException {
+    DB() throws SQLException, ClassNotFoundException, IOException {
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("connection.properties");
+        Properties prop = new Properties();
+        prop.load(input);
+        url = prop.getProperty("url");
+        input.close();
+        Class.forName(prop.getProperty("driver"));
+        this.conn = DriverManager
+                .getConnection(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
+    }
+
+    public ArrayList<String> getArray(ResultSet rs, String column) throws SQLException {
         ArrayList<String> logins = new ArrayList<>();
         while (rs.next()) {
-            logins.add(rs.getString("LOGIN"));
+            logins.add(rs.getString(column));
         }
         return logins;
     }
 
-    String createQuery(String table, String row) {
-        return String.format("SELECT * FROM %s WHERE LOGIN='%s'", table, row);
+    public Connection getConn() {
+        return conn;
     }
-
 }
 
