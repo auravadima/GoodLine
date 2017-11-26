@@ -11,17 +11,18 @@
 
 # Ссылки на выполненные или выполняющиеся наборы требований
 
-[Первый набор](release-1.md)  
+[Первый набор](Roadmap1.md)  
 [Второй набор](Roadmap2.md)  
+[Третий набор](Roadmap3.md)
 
 # Руководство
 
 Для компиляции проекта в командной строке перейдите в корневую папку и введите  
 <code>./BUILD.sh</code>  
 Для запуска в командной строке перейдите в корневую папку и введите  
-<code>./RUN.sh "Ваши аргументы"</code>  
+<code>DBLOGIN=123 DBPASS=123 ./RUN.sh "Ваши аргументы"</code>  
 Для тестирования запустите  
-<code>./TEST.sh</code>
+<code>DBLOGIN=123 DBPASS=123 ./TEST.sh</code>
 
 # Статус билда
 [![Build Status](https://travis-ci.org/auravadima/Goodline.svg?branch=master)](https://travis-ci.org/auravadima/Goodline)
