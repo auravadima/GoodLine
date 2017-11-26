@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class DB {
@@ -40,14 +38,6 @@ public class DB {
         Class.forName(driver);
         this.conn = DriverManager
                 .getConnection(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
-    }
-
-    public ArrayList<String> getArray(ResultSet rs, String column) throws SQLException {
-        ArrayList<String> logins = new ArrayList<>();
-        while (rs.next()) {
-            logins.add(rs.getString(column));
-        }
-        return logins;
     }
 
     public Connection getConn() {
