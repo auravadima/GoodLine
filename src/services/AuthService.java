@@ -1,18 +1,16 @@
 package services;
 
-import main.DB;
-
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class AuthService {
 
-    public Boolean userExist(DB db, String login) throws SQLException, ClassNotFoundException {
-        try (PreparedStatement ps = db.getConn().prepareStatement("SELECT LOGIN FROM USERS WHERE LOGIN=?")) {
+    public Boolean userExist(Connection conn, String login) throws SQLException, ClassNotFoundException {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT LOGIN FROM USERS WHERE LOGIN=?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -26,8 +24,8 @@ public class AuthService {
         }
     }
 
-    public boolean isRightPass(DB db, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
-        try (PreparedStatement ps = db.getConn().prepareStatement("SELECT PASS,SALT FROM USERS WHERE LOGIN=?")) {
+    public boolean isRightPass(Connection conn, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT PASS,SALT FROM USERS WHERE LOGIN=?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
                 String pass = null;
@@ -59,22 +57,17 @@ public class AuthService {
         }
     }
 
-    public boolean hasAccess(DB db, String res, String role, String login) throws SQLException, ClassNotFoundException {
+    public boolean hasAccess(Connection conn, String res, String role, String login) throws SQLException, ClassNotFoundException {
         if (role == null) {
             return true;
         }
         res = res + ".";
-        try (PreparedStatement ps = db.getConn().prepareStatement("SELECT * FROM AUTH WHERE LOGIN=?")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM AUTH WHERE LOGIN=? AND ROLE=?")) {
             ps.setString(1, login);
+            ps.setString(2, role);
             try (ResultSet rs = ps.executeQuery()) {
-                ArrayList<String> resList = new ArrayList<>();
-                ArrayList<String> roleList = new ArrayList<>();
                 while (rs.next()) {
-                    roleList.add(rs.getString("ROLE"));
-                    resList.add(rs.getString("RES") + ".");
-                }
-                for (int i = 0; i < resList.size(); i++) {
-                    if (roleList.get(i).equals(role) && res.startsWith(resList.get(i))) {
+                    if ((res.startsWith(rs.getString("RES") + "."))) {
                         return true;
                     }
                 }
