@@ -46,7 +46,7 @@ public class DB {
                 .getConnection(dburl + dbfile, dblogin, dbpass);
     }
 
-    public Connection getConn() {
+    Connection getConn() {
         return conn;
     }
 }
