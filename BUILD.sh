@@ -5,11 +5,13 @@ else
 fi
 mkdir jarfiles
 cd jarfiles
+mkdir resources
+cp ../src/resources/* resources
 jar xf ../libs/commons-cli-1.4.jar 
 jar xf ../libs/h2-1.4.196.jar 
 jar xf ../libs/log4j-core-2.9.1.jar 
 jar xf ../libs/flyway-core-4.2.0.jar 
 jar xf ../libs/log4j-api-2.9.1.jar 
-jar cfm run.jar ../META-INF/MANIFEST.MF main domain services ../db META-INF org ../log4j2.xml ../connection.properties 
+jar cfm run.jar ../META-INF/MANIFEST.MF main domain services ../db META-INF org resources
 mv run.jar ../run.jar
 
