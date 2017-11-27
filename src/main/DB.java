@@ -13,31 +13,37 @@ import java.util.Properties;
 public class DB {
 
     private Connection conn;
-    private String url;
+    private String dburl;
     private String driver;
+    private String dbfile;
+    private static final String dblogin = System.getenv("DBLOGIN");
+    private static final String dbpass = System.getenv("DBPASS");
 
-    void migrate() throws IOException {
+    private void migrate() throws IOException {
         Flyway flyway = new Flyway();
         flyway.setLocations("db/migration");
-        flyway.setDataSource(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
-        if (!new File("./database.mv.db").exists()) {
+        flyway.setDataSource(dburl + dbfile, dblogin, dbpass);
+        if (!new File(String.format("%s.mv.db", dbfile)).exists()) {
             flyway.migrate();
         }
     }
 
-    DB() throws IOException {
-        InputStream input = this.getClass().getClassLoader().getResourceAsStream("connection.properties");
+    DB() throws IOException, SQLException, ClassNotFoundException {
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("resources/connection.properties");
         Properties prop = new Properties();
         prop.load(input);
-        url = prop.getProperty("url");
+        dburl = prop.getProperty("url");
         driver = prop.getProperty("driver");
+        dbfile = prop.getProperty("filedb");
         input.close();
+        this.connect();
+        this.migrate();
     }
 
-    void connect() throws IOException, ClassNotFoundException, SQLException {
+    private void connect() throws IOException, ClassNotFoundException, SQLException {
         Class.forName(driver);
         this.conn = DriverManager
-                .getConnection(url, System.getenv("DBLOGIN"), System.getenv("DBPASS"));
+                .getConnection(dburl + dbfile, dblogin, dbpass);
     }
 
     public Connection getConn() {
