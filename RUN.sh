@@ -1,1 +1,1 @@
-java  -jar run.jar main.Main $@
+java -Dlog4j.configurationFile=src/resources/log4j2.xml -jar run.jar main.Main $@
