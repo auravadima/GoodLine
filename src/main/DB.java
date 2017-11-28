@@ -10,19 +10,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
 class DB {
 
     private Connection conn;
     private String dburl;
     private String driver;
     private String dbfile;
-    private static final String dblogin = System.getenv("DBLOGIN");
-    private static final String dbpass = System.getenv("DBPASS");
+    private static final String DBLOGIN = System.getenv("DBLOGIN");
+    private static final String DBPASS = System.getenv("DBPASS");
 
     private void migrate() throws IOException {
         Flyway flyway = new Flyway();
         flyway.setLocations("db/migration");
-        flyway.setDataSource(dburl + dbfile, dblogin, dbpass);
+        flyway.setDataSource(dburl + dbfile, DBLOGIN, DBPASS);
         if (!new File(String.format("%s.mv.db", dbfile)).exists()) {
             flyway.migrate();
         }
@@ -43,7 +44,7 @@ class DB {
     private void connect() throws IOException, ClassNotFoundException, SQLException {
         Class.forName(driver);
         this.conn = DriverManager
-                .getConnection(dburl + dbfile, dblogin, dbpass);
+                .getConnection(dburl + dbfile, DBLOGIN, DBPASS);
     }
 
     Connection getConn() {
