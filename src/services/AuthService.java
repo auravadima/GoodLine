@@ -11,7 +11,7 @@ public class AuthService {
 
     private Connection conn;
 
-    public AuthService(Connection conn){
+    public AuthService(Connection conn) {
         this.conn = conn;
     }
 
@@ -68,10 +68,11 @@ public class AuthService {
             return true;
         }
         res = res + ".";
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM AUTH WHERE LOGIN=? AND ROLE=? AND RES LIKE SUBSTRING(?,1,LENGTH(RES))")) {
+        try (PreparedStatement ps = conn.prepareStatement
+                ("SELECT * FROM AUTH WHERE LOGIN=? AND ROLE=? AND RES LIKE SUBSTRING(?,1,LENGTH(RES))")) {
             ps.setString(1, login);
             ps.setString(2, role);
-            ps.setString(3,res);
+            ps.setString(3, res);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
