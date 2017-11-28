@@ -69,7 +69,7 @@ public class AuthService {
         }
         res = res + ".";
         try (PreparedStatement ps = conn.prepareStatement
-                ("SELECT * FROM AUTH WHERE LOGIN=? AND ROLE=? AND RES LIKE SUBSTRING(?,1,LENGTH(RES))")) {
+                ("SELECT * FROM AUTH WHERE LOGIN=? AND ROLE=? AND RES=SUBSTRING(?,1,LENGTH(RES))")) {
             ps.setString(1, login);
             ps.setString(2, role);
             ps.setString(3, res);
