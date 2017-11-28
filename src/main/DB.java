@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DB {
+class DB {
 
     private Connection conn;
     private String dburl;
@@ -36,8 +36,8 @@ public class DB {
         driver = prop.getProperty("driver");
         dbfile = prop.getProperty("filedb");
         input.close();
-        this.connect();
         this.migrate();
+        this.connect();
     }
 
     private void connect() throws IOException, ClassNotFoundException, SQLException {
