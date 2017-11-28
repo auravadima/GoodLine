@@ -14,8 +14,9 @@ class Main {
         int status = 0;
 
         final Logger logger = LogManager.getRootLogger();
-        AuthService authService = new AuthService();
         try (Connection conn = new DB().getConn()) {
+
+            AuthService authService = new AuthService(conn);
 
             CmdArgsParser cmdParser = new CmdArgsParser();
             DataSet userData = cmdParser.parse(args);
@@ -24,14 +25,14 @@ class Main {
             }
             else {
 
-                Boolean usExist = authService.userExist(conn, userData.getLogin());
+                Boolean usExist = authService.userExist(userData.getLogin());
 
                 if (userData.hasAuthenticationData()) {
                     if (!usExist) {
                         logger.info(String.format("Login %s does not exist", userData.getLogin()));
                         status = 1;
                     }
-                    if (!authService.isRightPass(conn, userData.getPass(), userData.getLogin()) && status == 0) {
+                    if (!authService.isRightPass(userData.getPass(), userData.getLogin()) && status == 0) {
                         logger.info(String.format("Password %s for user %s is incorrect", userData.getPass(), userData.getLogin()));
                         status = 2;
                     }
@@ -42,7 +43,7 @@ class Main {
                         logger.info(String.format("Role %s is not defined", userData.getRole()));
                         status = 3;
                     }
-                    if (!authService.hasAccess(conn, userData.getRes(), userData.getRole(), userData.getLogin()) && status == 0) {
+                    if (!authService.hasAccess(userData.getRes(), userData.getRole(), userData.getLogin()) && status == 0) {
                         logger.info(String.format("Path %s with role %s for user %s not avaliable",
                                 userData.getRes(), userData.getRole(), userData.getLogin()));
                         status = 4;
