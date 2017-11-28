@@ -17,13 +17,13 @@ class DB {
     private String dburl;
     private String driver;
     private String dbfile;
-    private static final String DBLOGIN = System.getenv("DBLOGIN");
-    private static final String DBPASS = System.getenv("DBPASS");
+    private static final String DB_LOGIN = System.getenv("DBLOGIN");
+    private static final String DB_PASS = System.getenv("DBPASS");
 
     private void migrate() throws IOException {
         Flyway flyway = new Flyway();
         flyway.setLocations("db/migration");
-        flyway.setDataSource(dburl + dbfile, DBLOGIN, DBPASS);
+        flyway.setDataSource(dburl + dbfile, DB_LOGIN, DB_PASS);
         if (!new File(String.format("%s.mv.db", dbfile)).exists()) {
             flyway.migrate();
         }
@@ -44,7 +44,7 @@ class DB {
     private void connect() throws IOException, ClassNotFoundException, SQLException {
         Class.forName(driver);
         this.conn = DriverManager
-                .getConnection(dburl + dbfile, DBLOGIN, DBPASS);
+                .getConnection(dburl + dbfile, DB_LOGIN, DB_PASS);
     }
 
     Connection getConn() {
