@@ -9,7 +9,13 @@ import java.sql.SQLException;
 
 public class AuthService {
 
-    public Boolean userExist(Connection conn, String login) throws SQLException, ClassNotFoundException {
+    private Connection conn;
+
+    public AuthService(Connection conn){
+        this.conn = conn;
+    }
+
+    public Boolean userExist(String login) throws SQLException, ClassNotFoundException {
         try (PreparedStatement ps = conn.prepareStatement("SELECT LOGIN FROM USERS WHERE LOGIN=?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
@@ -24,7 +30,7 @@ public class AuthService {
         }
     }
 
-    public boolean isRightPass(Connection conn, String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+    public boolean isRightPass(String usPass, String login) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         try (PreparedStatement ps = conn.prepareStatement("SELECT PASS,SALT FROM USERS WHERE LOGIN=?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
@@ -57,7 +63,7 @@ public class AuthService {
         }
     }
 
-    public boolean hasAccess(Connection conn, String res, String role, String login) throws SQLException, ClassNotFoundException {
+    public boolean hasAccess(String res, String role, String login) throws SQLException, ClassNotFoundException {
         if (role == null) {
             return true;
         }
